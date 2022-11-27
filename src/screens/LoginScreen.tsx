@@ -1,13 +1,24 @@
 import React, { Fragment } from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
+import { useForm } from '../hooks/useForm';
 
 export const LoginScreen = () => {
 
     const navigator: any = useNavigation();
+
+    const { email, password, onChange } = useForm({
+        email: '',
+        password: ''
+    });
+
+    const onLogin = () => {
+        console.log({email, password});
+        Keyboard.dismiss();
+    }
 
     return (
         <Fragment>
@@ -34,6 +45,9 @@ export const LoginScreen = () => {
                                 textContentType="emailAddress"
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
+
+                                onChangeText={ (value) => onChange(value, 'email') }
+                                value={ email }
                             />
                         </View>
 
@@ -47,12 +61,18 @@ export const LoginScreen = () => {
                                 secureTextEntry={true}
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
+
+                                onSubmitEditing={ onLogin }
+
+                                onChangeText={ (value) => onChange(value, 'password') }
+                                value={ password }
                             />
                         </View>
 
                         <TouchableOpacity
                             activeOpacity={0.9}
                             style={[ styles.btnLogin ]}
+                            onPress={ onLogin }
                         >
                             <Text style={[ styles.textBtn ]}>Ingresar</Text>
                         </TouchableOpacity>

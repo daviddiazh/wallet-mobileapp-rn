@@ -4,10 +4,18 @@ import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
+import { useForm } from '../hooks/useForm';
 
 export const SignUpScreen = () => {
 
     const navigator: any = useNavigation();
+
+    const { fullName, phone, email, password, onChange } = useForm({
+        fullName: '',
+        phone: '',
+        email: '',
+        password: '',
+    });
 
     return (
         <Fragment>
@@ -33,6 +41,9 @@ export const SignUpScreen = () => {
                                 }}
                                 textContentType="name"
                                 placeholderTextColor={ COLOR.GRAY_DARK }
+
+                                onChangeText={ (value) => onChange(value, 'fullName') }
+                                value={ fullName }
                             />
                         </View>
 
@@ -44,7 +55,10 @@ export const SignUpScreen = () => {
                                 }}
                                 textContentType="telephoneNumber"
                                 secureTextEntry={true}
-                                placeholderTextColor={ COLOR.GRAY_DARK }                                
+                                placeholderTextColor={ COLOR.GRAY_DARK }
+
+                                onChangeText={ (value) => onChange(value, 'phone') }
+                                value={ phone }
                             />
                         </View>
 
@@ -57,6 +71,9 @@ export const SignUpScreen = () => {
                                 textContentType="emailAddress"
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
+
+                                onChangeText={ (value) => onChange(value, 'email') }
+                                value={ email }
                             />
                         </View>
 
@@ -70,6 +87,9 @@ export const SignUpScreen = () => {
                                 secureTextEntry={true}
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
+
+                                onChangeText={ (value) => onChange(value, 'password') }
+                                value={ password }
                             />
                         </View>
 

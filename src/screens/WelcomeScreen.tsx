@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import { COLOR } from '../theme/index';
 
 export const WelcomeScreen = () => {
 
@@ -11,7 +12,7 @@ export const WelcomeScreen = () => {
 
         const timer = setTimeout(() => {
             navigator.navigate("HomeScreen");
-        }, 5500)
+        }, Platform.OS === 'ios' ? 4300 : 4800)
         
         return () => {
             clearTimeout(timer);
@@ -29,7 +30,15 @@ export const WelcomeScreen = () => {
                     }}
                     autoStart={true}
                 />
-                <Text>Bienvenido(a), [nombre]</Text>
+                <Text
+                    style={{ 
+                        fontSize: Platform.OS === 'ios' ? 16 : 20,
+                        color: COLOR.BLACK,
+                        fontWeight: "600"
+                     }}
+                >
+                    Bienvenido(a)
+                </Text>
             </View>
         </Fragment>
     );
