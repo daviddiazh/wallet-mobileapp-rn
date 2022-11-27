@@ -2,11 +2,13 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { LoginScreen } from '../screens/LoginScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
+import { WelcomeScreen } from '../screens/WelcomeScreen';
 
 
 export type RootStackParams = {
     LoginScreen: undefined, 
-    SignUpScreen: undefined
+    SignUpScreen: undefined,
+    WelcomeScreen: undefined,
 }
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -28,6 +30,7 @@ export const StackNavigator = () => {
         >
             <Stack.Screen name="LoginScreen" component={ LoginScreen } />
             <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
+            <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
         </Stack.Navigator>
     );
 }

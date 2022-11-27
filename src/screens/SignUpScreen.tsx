@@ -76,6 +76,7 @@ export const SignUpScreen = () => {
                         <TouchableOpacity
                             activeOpacity={0.9}
                             style={[ styles.btnLogin ]}
+                            onPress={() => navigator.navigate("WelcomeScreen")}
                         >
                             <Text style={[ styles.textBtn ]}>Registrarme</Text>
                         </TouchableOpacity>
