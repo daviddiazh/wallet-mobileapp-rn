@@ -19,10 +19,9 @@ export const HomeScreen = () => {
                 <View>
                     <View style={[ styles.containerLogo ]}>
                         <Image 
-                            source={require('../images/logoMoney.jpeg')}
+                            source={require('../images/dale!.png')}
                             style={[ styles.logo ]}
                         />
-                        <Text style={[ styles.poweredByText ]}>by. David Diaz H</Text>
                     </View>
 
                     <View style={[ styles.containerForm ]}>
@@ -52,17 +51,17 @@ export const HomeScreen = () => {
                         </View>
 
                         <TouchableOpacity
-                            activeOpacity={0.8}
+                            activeOpacity={0.9}
                             style={[ styles.btnLogin ]}
                         >
                             <Text style={[ styles.textBtn ]}>Ingresar</Text>
                         </TouchableOpacity>
 
-                        <Text style={{textAlign: 'center', paddingVertical: 70}}>Ó registrate, ¡es gratis!</Text>
+                        <Text style={{ textAlign: 'center', paddingVertical: 80 }}>Ó registrate, ¡es gratis!</Text>
                     </View>
 
                     <TouchableOpacity
-                        activeOpacity={0.8}
+                        activeOpacity={0.9}
                         style={[ styles.btnSignUp]}
                     >
                         <Text style={[ styles.textBtn ]}>Crear una cuenta</Text>
@@ -87,9 +86,9 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-        width: 90,
+        width: 190,
         height: 90,
-        borderRadius: 100,
+        // borderRadius: 100,
     },
 
     poweredByText: {
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
 
     btnLogin: {
         // backgroundColor: COLOR.BLUE,
-        backgroundColor: COLOR.BLACK,
+        backgroundColor: COLOR.BLUE_DARK,
         paddingVertical: 15,
         borderRadius: 6,
         marginTop: 8
@@ -147,13 +146,13 @@ const styles = StyleSheet.create({
     },
 
     btnSignUp: {
-        backgroundColor: COLOR.BLACK,
+        backgroundColor: COLOR.BLUE_DARK,
         paddingVertical: 16,
         borderRadius: 0,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
-        // marginTop: 8
+        alignItems: 'center',
+        marginTop: -30
     }
 
 });
