@@ -1,9 +1,23 @@
-import React, { Fragment } from 'react';
-import { View, Text, ScrollView, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
+import React, { Fragment, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 export const WelcomeScreen = () => {
-    let ref;
+
+    const navigator: any = useNavigation();
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            navigator.navigate("HomeScreen");
+        }, 5500)
+        
+        return () => {
+            clearTimeout(timer);
+        }
+    }, []);
+    
     return (
         <Fragment>
             <View style={[ styles.mainScreen ]}>
@@ -11,12 +25,11 @@ export const WelcomeScreen = () => {
                     count={250}
                     origin={{
                         x: -15, 
-                        y: 35
+                        y: 20
                     }}
                     autoStart={true}
-                    ref={_ref => ref = _ref}
                 />
-                <Text>WelcomeScreen</Text>
+                <Text>Bienvenido(a), [nombre]</Text>
             </View>
         </Fragment>
     );
