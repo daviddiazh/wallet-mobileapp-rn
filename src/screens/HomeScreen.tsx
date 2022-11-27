@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 
 export const HomeScreen = () => {
@@ -65,6 +66,12 @@ export const HomeScreen = () => {
                         style={[ styles.btnSignUp]}
                     >
                         <Text style={[ styles.textBtn ]}>Crear una cuenta</Text>
+                        <Icon 
+                            name="arrow-forward-outline" 
+                            size={25} 
+                            color={COLOR.WHITE}
+                            style={{ marginLeft: 10 }}
+                        />
                     </TouchableOpacity>
 
                 </View>
@@ -136,7 +143,7 @@ const styles = StyleSheet.create({
         color: COLOR.WHITE,
         fontSize: Platform.OS === 'android' ? FONT_SIZES.TEXT_ANDROID : FONT_SIZES.TEXT_IOS,
         textAlign: 'center',
-        fontWeight: "500"
+        fontWeight: "500",
     },
 
     btnSignUp: {
