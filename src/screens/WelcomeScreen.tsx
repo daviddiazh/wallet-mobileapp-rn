@@ -42,4 +42,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 });
-//TODO: hacer del 100%
