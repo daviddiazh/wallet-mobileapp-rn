@@ -1,10 +1,27 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import 'react-native-gesture-handler';
 
-export const App = () => {
+import React from 'react';
+import { Button, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { StackNavigator } from './src/navigator/StackNavigator';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const App = () => {
+
   return (
-    <View>
-      <Text>Hello world</Text>
-    </View>
+    <NavigationContainer>        
+
+      <SafeAreaView />
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff'}}>
+
+        <StackNavigator />
+        
+        <StatusBar backgroundColor="#faea07" />
+
+      </SafeAreaView> 
+
+      </NavigationContainer>
   );
 }
+
+export default App;
