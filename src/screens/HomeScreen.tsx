@@ -148,10 +148,11 @@ const styles = StyleSheet.create({
 
     btnSignUp: {
         backgroundColor: COLOR.BLACK,
-        paddingVertical: 18,
+        paddingVertical: 16,
         borderRadius: 0,
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
         // marginTop: 8
     }
 
