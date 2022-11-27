@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import { HomeScreen } from '../screens/HomeScreen';
+import { LoginScreen } from '../screens/LoginScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 
 
 export type RootStackParams = {
-    HomeScreen: undefined, 
+    LoginScreen: undefined, 
     SignUpScreen: undefined
 }
 
@@ -14,7 +14,7 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
     return (
         <Stack.Navigator
-            initialRouteName="HomeScreen"
+            initialRouteName="LoginScreen"
             screenOptions={{
                 headerStyle: {
                 elevation: 0,
@@ -26,7 +26,7 @@ export const StackNavigator = () => {
                 }
             }}
         >
-            <Stack.Screen name="HomeScreen" component={ HomeScreen } />
+            <Stack.Screen name="LoginScreen" component={ LoginScreen } />
             <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
         </Stack.Navigator>
     );

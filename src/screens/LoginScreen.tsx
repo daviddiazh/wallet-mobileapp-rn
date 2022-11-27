@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 
-export const HomeScreen = () => {
+export const LoginScreen = () => {
 
     const navigator: any = useNavigation();
 
@@ -63,6 +63,7 @@ export const HomeScreen = () => {
                     <TouchableOpacity
                         activeOpacity={0.9}
                         style={[ styles.btnSignUp]}
+                        onPress={() => navigator.navigate("SignUpScreen")}
                     >
                         <Text style={[ styles.textBtn ]}>Crear una cuenta</Text>
                         <Icon 
