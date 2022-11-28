@@ -5,6 +5,7 @@ import { LoginScreen } from '../screens/LoginScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { HomeScreen } from '../screens/HomeScreen';
+import { Loading } from '../components/Loading';
 
 
 export type RootStackParams = {
@@ -19,6 +20,8 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
 
     const { userStatus } = useContext( AuthContext );
+
+    if( userStatus === 'checking' ) return <Loading />
 
     return (
         <Stack.Navigator

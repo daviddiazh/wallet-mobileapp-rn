@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: any) => {
                 }
             });
 
-            await AsyncStorage.setItem('token', data.token)
+            await AsyncStorage.setItem('token', data.token);
 
             // return data;
             return ;
@@ -74,12 +74,9 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
 
-    const logout = () => {
-        try {
-            
-        } catch (error) {
-            
-        }
+    const logout = async () => {
+        await AsyncStorage.removeItem('token');
+        dispatch({ type: 'logout - ActionType' })
     };
 
     const removeError = () => {
