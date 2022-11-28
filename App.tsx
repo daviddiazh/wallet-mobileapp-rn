@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StackNavigator } from './src/navigator/StackNavigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './src/context/auth/AuthProvider';
+import { COLOR } from './src/theme/index';
 
 
 const ApplicationState = ({ children }: any) => {
@@ -24,11 +25,11 @@ const App = () => {
       <NavigationContainer>        
 
         <SafeAreaView />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff'}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.BLUE_DARK}}>
 
           <StackNavigator />
           
-          <StatusBar backgroundColor="#faea07" />
+          <StatusBar backgroundColor={COLOR.BLUE_DARK} />
 
         </SafeAreaView> 
 
