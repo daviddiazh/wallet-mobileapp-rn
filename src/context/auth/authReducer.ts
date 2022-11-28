@@ -3,14 +3,14 @@ import { IUser } from '../../interfaces/user.interface';
 export interface AuthState {
     userStatus: 'checking' | 'authenticated' | 'not-authenticated';
     token: string | null;
-    error: string | object | null;
+    error: string | null;
     user: IUser | null;
 }
 
 type AuthActionTypes = 
     |   { type: 'signUp - ActionType', payload: { user: IUser, token: string } }
     |   { type: 'addError - ActionType', payload: Object }
-    |   { type: 'removeError - ActionType', payload: Object }
+    |   { type: 'removeError - ActionType' }
     |   { type: 'notAuthenticated - ActionType' }
     |   { type: 'logout - ActionType' }
 
@@ -23,13 +23,14 @@ export const authReducer = ( state: AuthState, action: AuthActionTypes ): AuthSt
                user: null,
                userStatus: 'not-authenticated',
                token: null,
-               error: action.payload,
+            //    error: action.payload,
+            //    error: 'CHANGE IN authReducer the error property',
            }
 
         case 'removeError - ActionType':
             return {
                 ...state,
-                error: null,
+                error: '',
             }
 
         case 'signUp - ActionType': 

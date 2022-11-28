@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity, Keyboard } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
@@ -6,16 +6,33 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
 import { AuthContext } from '../context/auth/AuthContext';
+import { Alert } from 'react-native';
 
 export const LoginScreen = () => {
 
     const navigator: NavigationProp<any, any> = useNavigation();
-    const { login } = useContext( AuthContext );
+    const { login, error, removeError } = useContext( AuthContext );
 
     const { email, password, onChange } = useForm({
         email: '',
         password: ''
     });
+
+    // useEffect(() => {
+    //     if( error?.length === 0 ) return;
+
+    //     Alert.alert(
+    //         'Login incorrecto', 
+    //         'CHANGE VALUE IN ALERT (LOGIN SCREEN)',
+    //         [
+    //             {
+    //                 text: 'Ok',
+    //                 onPress: removeError
+    //             }
+    //         ]
+    //     )
+    // }, [error])
+    
 
     const onLogin = () => {
         Keyboard.dismiss();

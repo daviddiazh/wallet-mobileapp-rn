@@ -6,11 +6,12 @@ interface AuthContextProps {
     user?: IUser | null;
     token: string | null;
     userStatus: 'checking' | 'authenticated' | 'not-authenticated';
+    error: string | null;
 
-    checkToken: () => void;
     login: ( email: string, password: string ) => Promise<void>;
     // signUp: ( fullName: string, phone: number, email: string, password: string, ) => Promise<void>;
     logout: () => void;
+    removeError: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
