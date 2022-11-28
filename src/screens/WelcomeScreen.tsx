@@ -9,7 +9,7 @@ export const WelcomeScreen = () => {
 
     const navigator: any = useNavigation();
 
-    const { user } = useContext( AuthContext )
+    const { user } = useContext( AuthContext );
 
     useEffect(() => {
 

@@ -32,11 +32,11 @@ export const AuthProvider = ({ children }: any) => {
                 ['x-token']: token
             }
         });
-        console.log('resp: ', {resp})
+        // console.log('resp: ', {resp})
         if( resp.status === 401 || resp.data.message === 'Su token ha expirado o no hay token en la petición' ) {
             return dispatch({type: 'notAuthenticated - ActionType'});
         }
-        console.log('resp.data: ', resp.data)
+        // console.log('resp.data: ', resp.data)
 
         await AsyncStorage.setItem('token', resp.data.token);
 
