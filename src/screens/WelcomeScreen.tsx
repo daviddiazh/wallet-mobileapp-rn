@@ -1,14 +1,15 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { COLOR } from '../theme/index';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export const WelcomeScreen = () => {
 
     const navigator: any = useNavigation();
 
-    //TODO: GET USER (AUTH CONTEXT)
+    const { user } = useContext( AuthContext )
 
     useEffect(() => {
 
@@ -39,7 +40,17 @@ export const WelcomeScreen = () => {
                         fontWeight: "600"
                      }}
                 >
-                    Bienvenido(a), [fullName]
+                    Bienvenido(a),
+                </Text>
+                <Text
+                    style={{
+                        fontSize: Platform.OS === 'ios' ? 20 : 24,
+                        color: COLOR.BLUE_DARK,
+                        fontWeight: "600",
+                        paddingTop: 10
+                    }}
+                >
+                    { user?.fullName.split(' ')[0] }
                 </Text>
             </View>
         </Fragment>

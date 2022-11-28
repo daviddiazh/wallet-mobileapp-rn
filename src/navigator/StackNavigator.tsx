@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import SplashScreen from 'react-native-splash-screen';
 import { AuthContext } from '../context/auth/AuthContext';
@@ -7,6 +7,7 @@ import { SignUpScreen } from '../screens/SignUpScreen';
 import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { Loading } from '../components/Loading';
+import { Tabs } from './Tabs';
 
 
 export type RootStackParams = {
@@ -14,6 +15,7 @@ export type RootStackParams = {
     SignUpScreen: undefined,
     WelcomeScreen: undefined,
     HomeScreen: undefined,
+    Tabs: undefined,
 }
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -23,10 +25,6 @@ export const StackNavigator = () => {
     const { userStatus } = useContext( AuthContext );
 
     if( userStatus === 'checking' ) return <Loading />
-
-    useEffect(() => {
-        SplashScreen.hide();
-    }, []);
 
     return (
         <Stack.Navigator
@@ -51,10 +49,11 @@ export const StackNavigator = () => {
                         </>
                     ) 
                     : (
-                        <>
+                        <Stack.Group>
+                            <Stack.Screen name="Tabs" component={ Tabs } />
                             <Stack.Screen name="HomeScreen" component={ HomeScreen } />
                             <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
-                        </>
+                        </Stack.Group>
                     ) 
             }
         </Stack.Navigator>

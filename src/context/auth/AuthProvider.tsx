@@ -7,7 +7,7 @@ import { LoginResponse, IUser } from '../../interfaces/user.interface';
 
 
 const AUTH_INITIAL_STATE: AuthState = {
-    userStatus: 'not-authenticated',
+    userStatus: 'checking',
     token: null,
     user: null,
     error: null,
@@ -18,20 +18,27 @@ export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
 
-    // useEffect(() => {
-    //     checkToken(null)
-    // }, [])
-    
+    useEffect(() => {
+        checkToken();
+    }, []);
 
-    const checkToken = async (endpoint: string) => {
+    const checkToken = async () => {
         const token = await AsyncStorage.getItem('token')
 
         if( !token ) return dispatch({type: 'notAuthenticated - ActionType'});
 
-        const resp = await walletApi.post(endpoint);
-        if( resp.status === 401 ) {
+        const resp = await walletApi.get('/auth/checkToken', {
+            headers: {
+                ['x-token']: token
+            }
+        });
+        console.log('resp: ', {resp})
+        if( resp.status === 401 || resp.data.message === 'Su token ha expirado o no hay token en la petición' ) {
             return dispatch({type: 'notAuthenticated - ActionType'});
         }
+        console.log('resp.data: ', resp.data)
+
+        await AsyncStorage.setItem('token', resp.data.token);
 
         dispatch({
             type: 'signUp - ActionType',
@@ -39,7 +46,7 @@ export const AuthProvider = ({ children }: any) => {
                 token: resp.data.token,
                 user: resp.data.user
             }
-        })
+        });
         
     };
 
