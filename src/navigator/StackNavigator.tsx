@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
+import { AuthContext } from '../context/auth/AuthContext';
 import { LoginScreen } from '../screens/LoginScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { WelcomeScreen } from '../screens/WelcomeScreen';
@@ -16,6 +17,9 @@ export type RootStackParams = {
 const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
+
+    const { userStatus } = useContext( AuthContext );
+
     return (
         <Stack.Navigator
             initialRouteName="LoginScreen"
@@ -30,10 +34,21 @@ export const StackNavigator = () => {
                 }
             }}
         >
-            <Stack.Screen name="LoginScreen" component={ LoginScreen } />
-            <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
-            <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
-            <Stack.Screen name="HomeScreen" component={ HomeScreen } />
+            {
+                ( userStatus === 'not-authenticated' ) 
+                    ? (
+                        <>
+                            <Stack.Screen name="LoginScreen" component={ LoginScreen } />
+                            <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
+                        </>
+                    ) 
+                    : (
+                        <>
+                            <Stack.Screen name="HomeScreen" component={ HomeScreen } />
+                            <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
+                        </>
+                    ) 
+            }
         </Stack.Navigator>
     );
 }

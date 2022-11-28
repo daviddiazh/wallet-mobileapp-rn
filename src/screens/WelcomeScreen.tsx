@@ -8,6 +8,8 @@ export const WelcomeScreen = () => {
 
     const navigator: any = useNavigation();
 
+    //TODO: GET USER (AUTH CONTEXT)
+
     useEffect(() => {
 
         const timer = setTimeout(() => {
@@ -37,7 +39,7 @@ export const WelcomeScreen = () => {
                         fontWeight: "600"
                      }}
                 >
-                    Bienvenido(a)
+                    Bienvenido(a), [fullName]
                 </Text>
             </View>
         </Fragment>

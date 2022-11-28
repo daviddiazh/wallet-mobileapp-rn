@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity, Keyboard } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export const LoginScreen = () => {
 
-    const navigator: any = useNavigation();
+    const navigator: NavigationProp<any, any> = useNavigation();
+    const { login } = useContext( AuthContext );
 
     const { email, password, onChange } = useForm({
         email: '',
@@ -16,8 +18,9 @@ export const LoginScreen = () => {
     });
 
     const onLogin = () => {
-        console.log({email, password});
         Keyboard.dismiss();
+        login(email, password);
+        navigator.navigate("HomeScreen");
     }
 
     return (
@@ -45,6 +48,7 @@ export const LoginScreen = () => {
                                 textContentType="emailAddress"
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
+                                autoComplete="off"
 
                                 onChangeText={ (value) => onChange(value, 'email') }
                                 value={ email }
