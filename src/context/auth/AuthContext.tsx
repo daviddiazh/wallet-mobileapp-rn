@@ -8,8 +8,8 @@ interface AuthContextProps {
     userStatus: 'checking' | 'authenticated' | 'not-authenticated';
     error: string | null;
 
-    login: ( email: string, password: string ) => Promise<void>;
-    // signUp: ( fullName: string, phone: number, email: string, password: string, ) => Promise<void>;
+    login: ( email: string, password: string ) => void;
+    signUp: ( fullName: string, phone: string | number, email: string, password: string, ) => void;
     logout: () => void;
     removeError: () => void;
 }

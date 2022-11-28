@@ -2,7 +2,7 @@
 export interface IUser {
     id: string;
     fullName: string; 
-    phone: number; 
+    phone: number | string; 
     email: string; 
     password?: string;
 }

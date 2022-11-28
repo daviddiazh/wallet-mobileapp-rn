@@ -4,7 +4,7 @@ export const useForm = <T extends Object>( initState: T ) => {
 
     const [ state, setState ] = useState( initState );
 
-    const onChange = ( value: string, field: keyof T ) => {
+    const onChange = ( value: string | number, field: keyof T ) => {
         setState({
             ...state,
             [field]: value

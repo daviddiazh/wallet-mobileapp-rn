@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "./AuthContext";
 import { authReducer, AuthState } from "./authReducer";
 import walletApi from '../../api/index';
-import { LoginResponse } from '../../interfaces/user.interface';
+import { LoginResponse, IUser } from '../../interfaces/user.interface';
 
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -57,18 +57,27 @@ export const AuthProvider = ({ children }: any) => {
 
             await AsyncStorage.setItem('token', data.token);
 
-            // return data;
-            return ;
+            return data;
         } catch (error: any) {
             dispatch({type: 'addError - ActionType', payload: 'Usuario y/o contraseña incorrectos.'}); //TODO: CHANGE PAYLOAD
             console.log('ERROR: ', error);
         }
     };
 
-    const signUp = ( fullName: string, phone: number, email: string, password: string, ) => {
+    const signUp = async ( fullName: string, phone: number | string, email: string, password: string, ) => {
         try {
-            
-            return;
+            const { data } = await walletApi.post('/auth/signUp', { fullName, phone, email, password });
+
+            dispatch({
+                type: 'signUp - ActionType', 
+                payload: {
+                    token: data.token,
+                    user: data.user,
+                }
+            });
+
+            await AsyncStorage.setItem('token', data.token);
+            return data;
         } catch (error) {
             
         }
@@ -89,7 +98,7 @@ export const AuthProvider = ({ children }: any) => {
                 ...state,
 
                 login,
-                // signUp,
+                signUp,
                 logout,
                 removeError
             }}

@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import React, { Fragment, useContext } from 'react'
+import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export const SignUpScreen = () => {
 
     const navigator: any = useNavigation();
+    const { signUp, error, removeError } = useContext( AuthContext );
 
     const { fullName, phone, email, password, onChange } = useForm({
         fullName: '',
@@ -16,6 +18,18 @@ export const SignUpScreen = () => {
         email: '',
         password: '',
     });
+
+    const onSignUp = () => {
+        console.log({fullName, phone, email, password});
+        Keyboard.dismiss();
+        signUp(
+            fullName,
+            phone,
+            email,
+            password
+        );
+        navigator.navigate("WelcomeScreen")
+    }
 
     return (
         <Fragment>
@@ -54,7 +68,6 @@ export const SignUpScreen = () => {
                                     ...styles.textInput,
                                 }}
                                 textContentType="telephoneNumber"
-                                secureTextEntry={true}
                                 placeholderTextColor={ COLOR.GRAY_DARK }
 
                                 onChangeText={ (value) => onChange(value, 'phone') }
@@ -96,7 +109,7 @@ export const SignUpScreen = () => {
                         <TouchableOpacity
                             activeOpacity={0.9}
                             style={[ styles.btnLogin ]}
-                            onPress={() => navigator.navigate("WelcomeScreen")}
+                            onPress={ onSignUp }
                         >
                             <Text style={[ styles.textBtn ]}>Registrarme</Text>
                         </TouchableOpacity>
