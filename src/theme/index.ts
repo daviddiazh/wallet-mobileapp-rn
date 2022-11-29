@@ -7,9 +7,11 @@ export const COLOR = {
     GRAY_DARK_TWO: '#333',
     BLUE: '#3179e5',
     BLUE_DARK: '#020937',
+    BLUE_DALE: '#00c1dd',
     GREEN: '#00a650',
     RED: '#ef4444',
-    RED_DARK: '#dc2626'
+    RED_DARK: '#dc2626',
+    YELLOW_DALE: '#f8c110'
 }
 
 export const FONT_SIZES = {

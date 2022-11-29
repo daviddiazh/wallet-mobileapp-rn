@@ -1,14 +1,16 @@
 import React, { useEffect, useContext } from 'react'
-import { Button, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, Platform, StatusBar, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/auth/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
+import { COLOR, FONT_SIZES } from '../theme/index';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const HomeScreen = () => {
 
     const navigator: any = useNavigation();
-    const { user, logout } = useContext( AuthContext )
+    const { user } = useContext( AuthContext );
 
     useEffect(() =>
         navigator.addListener('beforeRemove', (e: any) => {
@@ -17,16 +19,115 @@ export const HomeScreen = () => {
     }),[]);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ ...styles.main }}>
+            <StatusBar backgroundColor={COLOR.GRAY_LIGHT} />
             <ScrollView>
-                <View>
-                    <Text>HomeScreen</Text>
-                    <Button 
-                        title='Cerrar sesión'
-                        onPress={ logout }
-                    />
+                <View style={{ ...styles.container }}>
+                    <Text style={{ ...styles.greeting }}>Hola, { user?.fullName.split(' ')[0] }</Text>
                 </View>
+                <View 
+                    style={{ ...styles.amountContainer, }}
+                >
+                    <Image
+                        source={require('../images/dale!.png')}
+                        style={{width: 50, height: 20, marginHorizontal: 20}}
+                    />
+                    <View>
+                        <Text style={{ ...styles.amount }}>$ 49.464.684</Text>
+                        <Text style={{ ...styles.textBalance }}>Balance</Text>
+                    </View>
+                </View>
+                <View style={{ ...styles.container }}>
+                    <Text style={{ ...styles.titleMyMovements }}>Mis movimientos</Text>
+                    <View style={{ ...styles.containerMyMovements }}>
+
+                        { /* //TODO: Renderizar los movimientos */ }
+                        <View style={{ ...styles.noContentContainer }}>
+                            <Icon name="archive-outline" style={{ ...styles.iconNoContent }} />
+                            <Text style={{ ...styles.textNoContent }}>No has realizado ningún movimiento</Text>
+                        </View>
+
+                    </View>
+                </View>
+
             </ScrollView>
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    main: {
+        backgroundColor: COLOR.GRAY_LIGHT, 
+    },
+
+    container: {
+        margin: 15,
+    },
+
+    greeting: {
+        fontSize: Platform.OS === 'ios' ? FONT_SIZES.TEXT_IOS : FONT_SIZES.TEXT_ANDROID, 
+        textAlign: 'center', 
+        fontWeight: "400", 
+        color: COLOR.BLACK,
+    },
+
+    amountContainer: {
+        height: Platform.OS === 'ios' ? 100 : 110,
+        backgroundColor: COLOR.WHITE,
+        marginHorizontal: 15,
+        borderRadius: 6,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+
+    amount: {
+        fontSize: Platform.OS === 'ios' ? 27 : 30, 
+        textAlign: 'center', 
+        fontWeight: "600", 
+        color: COLOR.BLACK,
+    },
+
+    textBalance: {
+        fontSize: Platform.OS === 'ios' ? FONT_SIZES.TEXT_IOS : FONT_SIZES.TEXT_ANDROID, 
+        textAlign: 'left', 
+        fontWeight: "400", 
+        color: COLOR.GRAY_DARK_TWO,
+        paddingTop: 0,
+    },
+
+    titleMyMovements: {
+        marginTop: 15,
+        fontSize: Platform.OS === 'ios' ? 15 : 18, 
+        textAlign: 'left', 
+        fontWeight: "600", 
+        color: COLOR.GRAY_DARK_TWO,
+    },
+
+    containerMyMovements: {
+        height: 500,
+        padding: 15,
+        marginTop: 10,
+        backgroundColor: COLOR.WHITE,
+        borderRadius: 6,
+    },
+
+    noContentContainer: {
+        alignItems: 'center',
+        paddingHorizontal: 30,
+        paddingTop: 190
+    },
+
+    iconNoContent: {
+        color: COLOR.GRAY_DARK,
+        fontSize: 25
+    },
+
+    textNoContent: {
+        marginTop: 5,
+        fontSize: Platform.OS === 'ios' ? FONT_SIZES.TEXT_IOS : FONT_SIZES.TEXT_ANDROID, 
+        textAlign: 'center', 
+        fontWeight: "400", 
+        color: COLOR.GRAY_DARK_TWO,
+    },
+
+});

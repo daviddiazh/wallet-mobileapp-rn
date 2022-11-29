@@ -74,6 +74,13 @@ export const MenuScreen = () => {
                     <Text style={{ ...styles.titleOpcMenu }}>Cerrar sesión</Text>
                 </TouchableOpacity>
 
+                <View style={{ alignItems: 'center', marginTop: Platform.OS === 'ios' ? 100 : 200 }}>
+                    <Image 
+                        source={require('../images/dale!.png')}
+                        style={{width: 120, height: 50,}}
+                    />
+                </View>
+
             </View>
         </SafeAreaView>
     )

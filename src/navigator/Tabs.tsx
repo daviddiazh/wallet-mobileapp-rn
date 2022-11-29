@@ -16,7 +16,7 @@ export const Tabs = () => {
         <Tab.Navigator
             initialRouteName="HomeScreen"
             sceneContainerStyle={{
-                backgroundColor: COLOR.WHITE
+                backgroundColor: COLOR.GRAY_LIGHT,
             }}
             screenOptions={ ({ route }) => 
                 ({
