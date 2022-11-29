@@ -38,7 +38,7 @@ export const LoginScreen = () => {
         Keyboard.dismiss();
         if( email.length < 4 || password.length < 2 ) return;
         login(email, password);
-        navigator.navigate("HomeScreen");
+        // navigator.navigate("HomeScreen");
     }
 
     return (

@@ -1,10 +1,122 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, { useContext } from 'react'
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { AuthContext } from '../context/auth/AuthContext';
+import { COLOR } from '../theme';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const MenuScreen = () => {
+
+    const navigator: any = useNavigation();
+    const { user, logout } = useContext( AuthContext );
+
     return (
-        <View>
-            <Text>MenuScreen</Text>
-        </View>
+        <SafeAreaView>
+            <View style={{ ...styles.mainMenu }}>
+                <Text style={{ ...styles.titleMenu }}>Menú</Text>
+                <View style={{ ...styles.containerPicture }}>
+                    <Image 
+                        source={{ uri: user?.profilePicture }}
+                        style={{ ...styles.avatar }}
+                    />
+                </View>
+
+                <TouchableOpacity
+                    activeOpacity={.75}
+                    style={{ ...styles.menuItem }}
+                    onPress={ () => navigator.navigate("HomeScreen") }
+                >
+                    <Icon name='home-outline' style={{ ...styles.icon }} />
+                    <Text style={{ ...styles.titleOpcMenu }}>Inicio</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={.75}
+                    style={{ ...styles.menuItem }}
+                    onPress={ () => navigator.navigate("CreditScreen") }
+                >
+                    <Icon name='cash-outline' style={{ ...styles.icon }} />
+                    <Text style={{ ...styles.titleOpcMenu }}>Solicitar Credito</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={.75}
+                    style={{ ...styles.menuItem }}
+                    onPress={ () => navigator.navigate("PaymentScreen") }
+                >
+                    <Icon name='cash-outline' style={{ ...styles.icon }} />
+                    <Text style={{ ...styles.titleOpcMenu }}>Transferir Dinero</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={.75}
+                    style={{ ...styles.menuItem }}
+                >
+                    <Icon name='wallet-outline' style={{ ...styles.icon }} />
+                    <Text style={{ ...styles.titleOpcMenu }}>Mis cuentas de ahorro</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={.75}
+                    style={{ ...styles.menuItem }}
+                >
+                    <Icon name='settings-outline' style={{ ...styles.icon }} />
+                    <Text style={{ ...styles.titleOpcMenu }}>Ajustes</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={.75}
+                    style={{ ...styles.menuItem }}
+                    onPress={ logout }
+                >
+                    <Icon name='log-out-outline' style={{ ...styles.icon }} />
+                    <Text style={{ ...styles.titleOpcMenu }}>Cerrar sesión</Text>
+                </TouchableOpacity>
+
+            </View>
+        </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    mainMenu: {
+        margin: 15,
+    },
+
+    titleMenu: {
+        fontSize: Platform.OS === 'android' ? 24 : 20,
+        color: COLOR.BLACK,
+        fontWeight: "600",
+    },
+
+    containerPicture: {
+        alignItems: 'center',
+    },
+
+    avatar: {
+        width: 100, 
+        height: 100, 
+        borderRadius: 100,
+        marginVertical: 40
+    },
+
+    menuItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 13
+    },
+
+    icon: {
+        fontSize: 17,
+        marginRight: 10,
+        color: COLOR.BLACK
+    },
+
+    titleOpcMenu: {
+        fontSize: Platform.OS === 'android' ? 16 : 13,
+        color: COLOR.BLACK,
+        fontWeight: "600"
+    },
+
+});

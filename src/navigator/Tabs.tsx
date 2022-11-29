@@ -1,23 +1,23 @@
 import React from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { MenuScreen } from '../screens/MenuScreen';
-import { StackNavigator } from './StackNavigator';
-import { TabRouter } from '@react-navigation/native';
 import { CreditScreen } from '../screens/CreditScreen';
 import { PaymentScreen } from '../screens/PaymentScreen';
-import { Text } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { COLOR } from '../theme/index';
 
 const Tab = createBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 
 export const Tabs = () => {
 
     return (
         <Tab.Navigator
             initialRouteName="HomeScreen"
-            
+            sceneContainerStyle={{
+                backgroundColor: COLOR.WHITE
+            }}
             screenOptions={ ({ route }) => 
                 ({
                     headerStyle: {
@@ -25,7 +25,7 @@ export const Tabs = () => {
                         shadowColor: 'transparent',
                     },
                     headerShown: false,
-            
+
                     tabBarIcon: ({color, focused}) => {
                         let iconName: string = '';
                         switch( route.name ) {

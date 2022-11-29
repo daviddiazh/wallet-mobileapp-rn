@@ -8,6 +8,8 @@ import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { Loading } from '../components/Loading';
 import { Tabs } from './Tabs';
+import { CreditScreen } from '../screens/CreditScreen';
+import { PaymentScreen } from '../screens/PaymentScreen';
 
 
 export type RootStackParams = {
@@ -16,6 +18,8 @@ export type RootStackParams = {
     WelcomeScreen: undefined,
     HomeScreen: undefined,
     Tabs: undefined,
+    CreditScreen: undefined,
+    PaymentScreen: undefined
 }
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -31,12 +35,12 @@ export const StackNavigator = () => {
             initialRouteName="LoginScreen"
             screenOptions={{
                 headerStyle: {
-                elevation: 0,
-                shadowColor: 'transparent'
+                    elevation: 0,
+                    shadowColor: 'transparent'
                 },
                 headerShown: false,
                 cardStyle: {
-                backgroundColor: 'white'
+                    backgroundColor: 'white'
                 }
             }}
         >
@@ -53,6 +57,8 @@ export const StackNavigator = () => {
                             <Stack.Screen name="Tabs" component={ Tabs } />
                             <Stack.Screen name="HomeScreen" component={ HomeScreen } />
                             <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
+                            <Stack.Screen name="CreditScreen" component={ CreditScreen } />
+                            <Stack.Screen name="PaymentScreen" component={ PaymentScreen } />
                         </Stack.Group>
                     ) 
             }

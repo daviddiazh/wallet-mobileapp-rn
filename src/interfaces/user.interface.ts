@@ -5,6 +5,7 @@ export interface IUser {
     phone: number | string; 
     email: string; 
     password?: string;
+    profilePicture?: string;
 }
 
 export interface LoginResponse {
