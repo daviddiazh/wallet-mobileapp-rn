@@ -23,16 +23,20 @@ export const HomeScreen = () => {
             <StatusBar backgroundColor={COLOR.GRAY_LIGHT} />
             <ScrollView>
                 <View style={{ ...styles.container }}>
-                    <Text style={{ ...styles.greeting }}>Hola, { user?.fullName.split(' ')[0] }</Text>
+                    <Text style={{ ...styles.greeting, textAlign: 'center' }}>Hola, { user?.fullName.split(' ')[0] }</Text>
                 </View>
                 <View 
                     style={{ ...styles.amountContainer, }}
                 >
-                    <Image
+                    {/* <Image
                         source={require('../images/dale!.png')}
                         style={{width: 50, height: 20, marginHorizontal: 20}}
-                    />
+                    /> */}
+                    <View style={{ ...styles.containerIcon }}>
+                        <Icon name="wallet-outline" style={{ ...styles.iconMoney }} />
+                    </View>
                     <View>
+                        { /* //TODO: SI NO HAY CUENTA PONER UN BOTON PARA CREARLA AQUI */ }
                         <Text style={{ ...styles.amount }}>$ 49.464.684</Text>
                         <Text style={{ ...styles.textBalance }}>Balance</Text>
                     </View>
@@ -43,7 +47,7 @@ export const HomeScreen = () => {
 
                         { /* //TODO: Renderizar los movimientos */ }
                         <View style={{ ...styles.noContentContainer }}>
-                            <Icon name="archive-outline" style={{ ...styles.iconNoContent }} />
+                            <Icon name="file-tray-full-outline" style={{ ...styles.iconNoContent }} />
                             <Text style={{ ...styles.textNoContent }}>No has realizado ningún movimiento</Text>
                         </View>
 
@@ -80,6 +84,20 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
+    containerIcon: {
+        // borderColor: COLOR.BLUE,
+        // borderWidth: 3,
+        backgroundColor: COLOR.GRAY_LIGHT,
+        borderRadius: 100,
+        padding: 10,
+        marginHorizontal: 15
+    },
+
+    iconMoney: {
+        fontSize: 20,
+        color: COLOR.BLUE
+    },
+
     amount: {
         fontSize: Platform.OS === 'ios' ? 27 : 30, 
         textAlign: 'center', 
@@ -114,12 +132,12 @@ const styles = StyleSheet.create({
     noContentContainer: {
         alignItems: 'center',
         paddingHorizontal: 30,
-        paddingTop: 190
+        paddingTop: 180
     },
 
     iconNoContent: {
         color: COLOR.GRAY_DARK,
-        fontSize: 25
+        fontSize: 30
     },
 
     textNoContent: {

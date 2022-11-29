@@ -5,6 +5,7 @@ export interface AuthState {
     token: string | null;
     error: string | null;
     user: IUser | null;
+    // id: string | null;
 }
 
 type AuthActionTypes = 

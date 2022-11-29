@@ -26,6 +26,8 @@ export const Tabs = () => {
                     },
                     headerShown: false,
 
+                    tabBarActiveTintColor: COLOR.BLUE,
+
                     tabBarIcon: ({color, focused}) => {
                         let iconName: string = '';
                         switch( route.name ) {

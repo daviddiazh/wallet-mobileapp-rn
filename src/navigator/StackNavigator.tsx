@@ -1,6 +1,5 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import SplashScreen from 'react-native-splash-screen';
 import { AuthContext } from '../context/auth/AuthContext';
 import { LoginScreen } from '../screens/LoginScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';

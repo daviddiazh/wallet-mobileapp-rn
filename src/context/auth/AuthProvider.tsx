@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "./AuthContext";
 import { authReducer, AuthState } from "./authReducer";
 import walletApi from '../../api/index';
-import { LoginResponse, IUser } from '../../interfaces/user.interface';
+import { LoginResponse } from '../../interfaces/user.interface';
 
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }: any) => {
         });
         // console.log('resp: ', {resp})
         if( resp.status === 401 || resp.data.message === 'Su token ha expirado o no hay token en la petición' ) {
+            await AsyncStorage.removeItem('token');
             return dispatch({type: 'notAuthenticated - ActionType'});
         }
         // console.log('resp.data: ', resp.data)
@@ -43,8 +44,8 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({
             type: 'signUp - ActionType',
             payload: {
+                user: resp.data.user,
                 token: resp.data.token,
-                user: resp.data.user
             }
         });
         
@@ -86,7 +87,8 @@ export const AuthProvider = ({ children }: any) => {
             await AsyncStorage.setItem('token', data.token);
             return data;
         } catch (error) {
-            
+            dispatch({type: 'addError - ActionType', payload: ''}); //TODO: CHANGE PAYLOAD
+            console.log('ERROR: ', error);
         }
     };
 
