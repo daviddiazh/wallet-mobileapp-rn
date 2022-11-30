@@ -8,12 +8,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './src/context/auth/AuthProvider';
 import { COLOR } from './src/theme/index';
 import SplashScreen from 'react-native-splash-screen';
+import { AccountProvider } from './src/context/account/AccountProvider';
+import { MovementsProvider } from './src/context/movements/MovementProvider';
 
 
 const ApplicationState = ({ children }: any) => {
   return (
     <AuthProvider>
-      { children }
+      <AccountProvider>
+        <MovementsProvider>
+          { children }
+        </MovementsProvider>
+      </AccountProvider>
     </AuthProvider>
   );
 }

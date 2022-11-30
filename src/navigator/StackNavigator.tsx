@@ -49,13 +49,13 @@ export const StackNavigator = () => {
                         <>
                             <Stack.Screen name="LoginScreen" component={ LoginScreen } />
                             <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
+                            <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
                         </>
                     ) 
                     : (
                         <Stack.Group>
                             <Stack.Screen name="Tabs" component={ Tabs } />
                             <Stack.Screen name="HomeScreen" component={ HomeScreen } />
-                            <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } />
                             <Stack.Screen name="CreditScreen" component={ CreditScreen } />
                             <Stack.Screen name="PaymentScreen" component={ PaymentScreen } />
                         </Stack.Group>

@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: any) => {
     }, []);
 
     const checkToken = async () => {
+        // await AsyncStorage.removeItem('token');
         const token = await AsyncStorage.getItem('token')
 
         if( !token ) return dispatch({type: 'notAuthenticated - ActionType'});
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }: any) => {
         });
         // console.log('resp: ', {resp})
         if( resp.status === 401 || resp.data.message === 'Su token ha expirado o no hay token en la petición' ) {
+        // if( resp.status === 401 ) {
             await AsyncStorage.removeItem('token');
             return dispatch({type: 'notAuthenticated - ActionType'});
         }
@@ -55,6 +57,8 @@ export const AuthProvider = ({ children }: any) => {
         try {
             const { data } = await walletApi.post<LoginResponse>('/auth/login', { email, password });
 
+            console.log('data: ', data)
+
             dispatch({
                 type: 'signUp - ActionType', 
                 payload: {
@@ -67,8 +71,8 @@ export const AuthProvider = ({ children }: any) => {
 
             return data;
         } catch (error: any) {
-            dispatch({type: 'addError - ActionType', payload: 'Usuario y/o contraseña incorrectos.'}); //TODO: CHANGE PAYLOAD
             console.log('ERROR: ', error);
+            dispatch({type: 'addError - ActionType', payload: ''}); //TODO: CHANGE PAYLOAD
         }
     };
 

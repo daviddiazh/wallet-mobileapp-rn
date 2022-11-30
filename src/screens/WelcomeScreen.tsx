@@ -11,11 +11,13 @@ export const WelcomeScreen = () => {
 
     const { user } = useContext( AuthContext );
 
+    console.log('USERRR IN WS' , user)
+
     useEffect(() => {
 
         const timer = setTimeout(() => {
             navigator.navigate("HomeScreen");
-        }, Platform.OS === 'ios' ? 4300 : 4800)
+        }, Platform.OS === 'ios' ? 4500 : 4800)
         
         return () => {
             clearTimeout(timer);
@@ -40,9 +42,9 @@ export const WelcomeScreen = () => {
                         fontWeight: "600"
                      }}
                 >
-                    Bienvenido(a),
+                    Bienvenido(a)
                 </Text>
-                <Text
+                {/* <Text
                     style={{
                         fontSize: Platform.OS === 'ios' ? 20 : 24,
                         color: COLOR.BLUE_DARK,
@@ -51,7 +53,7 @@ export const WelcomeScreen = () => {
                     }}
                 >
                     { user?.fullName.split(' ')[0] }
-                </Text>
+                </Text> */}
             </View>
         </Fragment>
     );

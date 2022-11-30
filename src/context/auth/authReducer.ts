@@ -5,11 +5,10 @@ export interface AuthState {
     token: string | null;
     error: string | null;
     user: IUser | null;
-    // id: string | null;
 }
 
 type AuthActionTypes = 
-    |   { type: 'signUp - ActionType', payload: { user: IUser, token: string } }
+    |   { type: 'signUp - ActionType', payload: { user: IUser, token: string, } }
     |   { type: 'addError - ActionType', payload: Object }
     |   { type: 'removeError - ActionType' }
     |   { type: 'notAuthenticated - ActionType' }

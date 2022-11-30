@@ -20,7 +20,6 @@ export const SignUpScreen = () => {
     });
 
     const onSignUp = () => {
-        console.log({fullName, phone, email, password});
         Keyboard.dismiss();
         signUp(
             fullName,
