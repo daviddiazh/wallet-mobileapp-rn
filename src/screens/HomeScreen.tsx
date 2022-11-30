@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/auth/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-gesture-handler';
+import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
 import { COLOR, FONT_SIZES } from '../theme/index';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AccountContext } from '../context/account/AccountContext';
@@ -20,12 +20,21 @@ export const HomeScreen = () => {
     const { movements, myMovementsByAccountId } = useContext( MovementContext );
     
     const [isLoading, setIsLoading] = useState(true)
+    const [refresh, setRefresh] = useState(false)
 
     useEffect(() =>
         navigator.addListener('beforeRemove', (e: any) => {
         e.preventDefault();
         if (true) return
     }),[]);
+
+    const onRefresh = () => {
+        setRefresh(true);
+
+        findByUserEmail(user?.email!);
+        myMovementsByAccountId(account?._id!);
+        setRefresh(false);
+    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -39,7 +48,14 @@ export const HomeScreen = () => {
     return (
         <SafeAreaView style={{ ...styles.main }}>
             <StatusBar backgroundColor={COLOR.GRAY_LIGHT} />
-            {/* <ScrollView> */}
+            <ScrollView
+                refreshControl={
+                    <RefreshControl 
+                        refreshing={ refresh }
+                        onRefresh={() => onRefresh()}
+                    />
+                }
+            >
                 <View style={{ ...styles.container }}>
                     <Text style={{ ...styles.greeting, textAlign: 'center' }}>Hola, { user?.fullName.split(' ')[0] }</Text>
                 </View>
@@ -96,7 +112,7 @@ export const HomeScreen = () => {
                     </View>
                 </View>
 
-            {/* </ScrollView> */}
+            </ScrollView>
         </SafeAreaView>
     );
 }
