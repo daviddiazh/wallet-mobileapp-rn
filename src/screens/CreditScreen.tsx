@@ -84,7 +84,7 @@ export const CreditScreen = () => {
 
                         <View style={ styles.textInputBackground }>
                             <TextInput
-                                placeholder="Razón del credito"
+                                placeholder="Motivo del credito"
                                 style={{ 
                                     ...styles.textInput,
                                 }}
