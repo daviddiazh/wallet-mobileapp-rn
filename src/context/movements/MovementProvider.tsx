@@ -32,12 +32,9 @@ export const MovementsProvider: FC<any> = ({ children }: any) => {
     }
     
     const moneyTransfer = async (accountId_Income: string, accountId_Outcome: string, reason: string, amount: string) => {
-        console.log('amount: ', amount)
         const numberAmount = parseInt(amount)
-        console.log('numberAmount: ', numberAmount)
-        console.log('typeof numberAmount: ', typeof numberAmount)
         const { data } = await walletApi.post('/movement/moneyTransfer', { accountId_Income, accountId_Outcome, amount: numberAmount, reason });
-        console.log('moneyTransfer: ', data)
+        // console.log('moneyTransfer: ', data)
 
         return data;
     }

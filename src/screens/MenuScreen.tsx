@@ -17,7 +17,8 @@ export const MenuScreen = () => {
                 <Text style={{ ...styles.titleMenu }}>Menú</Text>
                 <View style={{ ...styles.containerPicture }}>
                     <Image 
-                        source={{ uri: user?.profilePicture }}
+                        // source={{ uri: user?.profilePicture }}
+                        source={{ uri: 'https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png' }}
                         style={{ ...styles.avatar }}
                     />
                 </View>

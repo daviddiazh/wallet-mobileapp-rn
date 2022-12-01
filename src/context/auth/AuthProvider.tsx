@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: any) => {
         try {
             const { data } = await walletApi.post<LoginResponse>('/auth/login', { email, password });
 
-            console.log('data: ', data)
+            // console.log('data: ', data)
 
             dispatch({
                 type: 'signUp - ActionType', 
