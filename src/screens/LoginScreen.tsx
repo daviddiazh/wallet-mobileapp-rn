@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 
     btnLogin: {
         // backgroundColor: COLOR.BLUE,
-        backgroundColor: COLOR.BLUE_DARK,
+        backgroundColor: COLOR.BLUE_DALE,
         paddingVertical: 15,
         borderRadius: 6,
         marginTop: 8
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     },
 
     btnSignUp: {
-        backgroundColor: COLOR.BLUE_DARK,
+        backgroundColor: COLOR.BLUE_DALE,
         paddingVertical: 16,
         borderRadius: 0,
         flexDirection: 'row',

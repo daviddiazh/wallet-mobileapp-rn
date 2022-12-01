@@ -1,26 +1,20 @@
-import { FC, useReducer, useState } from 'react';
+import { FC, useState } from 'react';
 import { MovementContext } from './MovementContext';
-import { IMovement } from '../../interfaces/movement.interface';
 import walletApi from '../../api';
+import { IMovement } from '../../interfaces/movement.interface';
 
 export interface MovementState{
     movements: IMovement | IMovement[];
 }
 
-// const MOVEMENTS_INITIAL_STATE: MovementState = {
-//     movements: [],
-// }
-
 export const MovementsProvider: FC<any> = ({ children }: any) => {
-
-    // const [ state, dispatch ] = useReducer(movementsReducer, MOVEMENTS_INITIAL_STATE);
 
     const [movements, setMovements] = useState([])
 
     const myMovementsByAccountId = async (id: string) => {
         try {
             const { data } = await walletApi.post('/movement/myMovementsByAccountId', { id });
-            console.log('MOVEMENTS IN PROVIDER: ', data)
+            // console.log('MOVEMENTS IN PROVIDER: ', data)
 
             setMovements(data);
         } catch (error) {
@@ -29,17 +23,23 @@ export const MovementsProvider: FC<any> = ({ children }: any) => {
 
     }
 
-    const requestCredit = (accountId_Income: string, amount: number, reason: string) => {
+    const requestCredit = async (accountId_Income: string, amount: string, reason: string) => {
+        const numberAmount = parseInt(amount)
+        const { data } = await walletApi.post('/movement/requestCredit', { accountId_Income, amount: numberAmount, reason });
+        // console.log('requestCredit: ', data)
 
+        return data;
     }
     
-    const moneyTransfer = (accountId_Income: string, accountId_Outcome: string, reason: string, amount: number) => {
+    const moneyTransfer = async (accountId_Income: string, accountId_Outcome: string, reason: string, amount: string) => {
+        const { data } = await walletApi.post('/movement/moneyTransfer', { accountId_Income, accountId_Outcome, amount, reason });
+        console.log('moneyTransfer: ', data)
 
+        return data;
     }
 
     return (
         <MovementContext.Provider value={{
-            // ...state,
             movements,
 
             myMovementsByAccountId,

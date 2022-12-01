@@ -9,7 +9,7 @@ export const COLOR = {
     BLUE_DARK: '#020937',
     BLUE_DALE: '#00c1dd',
     GREEN: '#00a650',
-    RED: '#ef4444',
+    RED: '#8415b',
     RED_DARK: '#dc2626',
     YELLOW_DALE: '#f8c110'
 }

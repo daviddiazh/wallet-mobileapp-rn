@@ -3,7 +3,7 @@ export interface IMovement {
     accountId_Income?: string;
     accountId_Outcome?: string;
     reason?: string;
-    amount?: number;
+    amount?: number | string;
     fees?: number;
     createdAt?: any;
 }

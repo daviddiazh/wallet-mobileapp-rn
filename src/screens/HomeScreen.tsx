@@ -49,6 +49,10 @@ export const HomeScreen = () => {
         <SafeAreaView style={{ ...styles.main }}>
             <StatusBar backgroundColor={COLOR.GRAY_LIGHT} />
             <ScrollView
+                contentInsetAdjustmentBehavior="automatic"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                
                 refreshControl={
                     <RefreshControl 
                         refreshing={ refresh }
@@ -89,18 +93,32 @@ export const HomeScreen = () => {
                                 <ScrollView>
                                     {
                                         movements.map(movement => (
-                                            <View key={ movement._id }>
-                                                <View>
-                                                    <View>
-                                                        <Icon name="analytics-outline" />
-                                                        <Text>{ movement.reason }</Text>
+                                            <View 
+                                                key={ movement._id }
+                                                style={{ ...styles.containerMovement }}    
+                                            >
+                                                <View style={{ ...styles.containerAmountAndReason }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <Icon name="analytics-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
+                                                        <Text
+                                                            style={{ ...styles.descriptionReason }}
+                                                        >
+                                                            { movement?.reason?.length! >= 20 ? movement.reason?.substring(0, 20) + '...' : movement.reason }
+                                                        </Text>
                                                     </View>
                                                     <View>
-                                                        <Text>{ movement.amount }</Text>
+                                                        <Text 
+                                                            style={{ 
+                                                                ...styles.movementAmount, 
+                                                                color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK
+                                                            }}
+                                                        >
+                                                            { movement.amount }
+                                                        </Text>
                                                     </View>
                                                 </View>
                                                 <View>
-                                                    <Text>{ movement.createdAt }</Text>
+                                                    <Text style={{ ...styles.createdAt }}>{ movement.createdAt }</Text>
                                                 </View>
                                             </View>
                                         ))
@@ -164,7 +182,7 @@ const styles = StyleSheet.create({
     },
 
     textBalance: {
-        fontSize: Platform.OS === 'ios' ? FONT_SIZES.TEXT_IOS : FONT_SIZES.TEXT_ANDROID, 
+        fontSize: Platform.OS === 'ios' ? FONT_SIZES.TEXT_IOS : FONT_SIZES.TEXT_ANDROID,
         textAlign: 'left', 
         fontWeight: "400", 
         color: COLOR.GRAY_DARK_TWO,
@@ -180,7 +198,7 @@ const styles = StyleSheet.create({
     },
 
     containerMyMovements: {
-        height: 500,
+        height: Platform.OS === 'ios' ? 500 : 600,
         padding: 15,
         marginTop: 10,
         backgroundColor: COLOR.WHITE,
@@ -190,7 +208,7 @@ const styles = StyleSheet.create({
     noContentContainer: {
         alignItems: 'center',
         paddingHorizontal: 30,
-        paddingTop: 180
+        paddingTop: Platform.OS === 'ios' ? 180 : 250
     },
 
     iconNoContent: {
@@ -205,5 +223,38 @@ const styles = StyleSheet.create({
         fontWeight: "400", 
         color: COLOR.GRAY_DARK_TWO,
     },
+
+    containerMovement: {
+        marginBottom: 20
+    },
+
+    containerAmountAndReason: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+    },
+
+    iconAnalytics: {
+        fontSize: 17,
+        marginRight: 10,
+        // color: COLOR.BLACK,
+    },
+
+    descriptionReason: {
+        fontSize: Platform.OS === 'ios' ? 14 : 16,
+        fontWeight: "600", 
+        color: COLOR.GRAY_DARK_TWO,
+    },
+
+    movementAmount: {
+        fontSize: Platform.OS === 'ios' ? 14 : 16,
+        fontWeight: "500", 
+    },
+
+    createdAt: {
+        fontSize: Platform.OS === 'ios' ? FONT_SIZES.TEXT_IOS : FONT_SIZES.TEXT_ANDROID,
+        fontWeight: "400", 
+        color: COLOR.GRAY_DARK,
+    }
 
 });

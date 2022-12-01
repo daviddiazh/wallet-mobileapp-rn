@@ -11,7 +11,7 @@ export const WelcomeScreen = () => {
 
     const { user } = useContext( AuthContext );
 
-    console.log('USERRR IN WS' , user)
+    // console.log('USERRR IN WS' , user)
 
     useEffect(() => {
 
