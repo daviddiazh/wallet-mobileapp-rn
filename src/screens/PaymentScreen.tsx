@@ -3,8 +3,9 @@ import { StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity, Alert } 
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { MovementContext } from '../context/movements/MovementContext';
 import { AccountContext } from '../context/account/AccountContext';
 import { AuthContext } from '../context/auth/AuthContext';
@@ -64,10 +65,24 @@ export const PaymentScreen = () => {
                 <View style={{ ...styles.mainContainer }}>
                     <View style={{ ...styles.containerForm }}>
 
-                        {/* <View style={{ marginBottom: 50 }}>
-                            <Text>Saldo actual:</Text>
-                            <Text>{ account.balance }</Text>
-                        </View> */}
+                        <View style={{ ...styles.containerAccount }}>
+                            <View style={{ ...styles.container_titleAccounts }}>
+                                <Icon name="list-outline" style={{ ...styles.iconAccount }} />
+                                <Text style={{ ...styles.titleAccount }}>Cuentas</Text>
+                            </View>
+
+                            <Text style={{ ...styles.containerAccount_title }}>Cuentas de Ahorro</Text>
+                            <Text style={{ ...styles.containerAccount_subtitle }}>Ahorros</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View>
+                                    <Text style={{ ...styles.containerAccount_accountId }}>{ account._id }</Text>
+                                </View>
+                                <View>
+                                    <Text style={{ ...styles.containerAccount_titleBalance }}>Saldo disponible</Text>
+                                    <Text style={{ ...styles.containerAccount_balance }}>{ account.balance }</Text>
+                                </View>
+                            </View>
+                        </View>
 
                         <View style={ styles.textInputBackground }>
                             <TextInput
@@ -75,7 +90,6 @@ export const PaymentScreen = () => {
                                 style={{ 
                                     ...styles.textInput,
                                 }}
-                                // textContentType=""
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
 
@@ -90,7 +104,6 @@ export const PaymentScreen = () => {
                                 style={{ 
                                     ...styles.textInput,
                                 }}
-                                // textContentType=""
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
 
@@ -107,7 +120,6 @@ export const PaymentScreen = () => {
                                 style={{ 
                                     ...styles.textInput,
                                 }}
-                                // textContentType=""
                                 placeholderTextColor={ COLOR.GRAY_DARK }
                                 autoCapitalize="none"
 
@@ -137,10 +149,9 @@ const styles = StyleSheet.create({
     },
 
     mainContainer: {
-        height: '96%',
+        height: '90%',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'pink'
     },
 
     titleScreen: {
@@ -149,8 +160,76 @@ const styles = StyleSheet.create({
         fontWeight: "600",
     },
 
+    containerAccount: {
+        backgroundColor: COLOR.WHITE,
+        marginBottom: Platform.OS === 'ios' ? 60 : 70,
+        borderRadius: 6,
+        padding: 15,
+
+        shadowColor: "#ccc",
+        shadowOffset: {
+            width: -2,
+            height: 2,
+        },
+        shadowOpacity: 0.90,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+    },
+
+    container_titleAccounts: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderBottomColor: COLOR.GRAY_LIGHT,
+        borderBottomWidth: 1
+    },
+
+    iconAccount: {
+        color: COLOR.BLACK,
+        fontSize: Platform.OS === 'android' ? 20 : 16,
+        marginRight: 10
+    },
+
+    titleAccount: {
+        fontSize: Platform.OS === 'android' ? 19 : 16,
+        color: COLOR.BLACK,
+    },
+
+    containerAccount_title: {
+        fontSize: Platform.OS === 'android' ? 16 : 14,
+        color: COLOR.BLACK,
+        fontWeight: "600",
+        paddingTop: 10
+    },
+
+    containerAccount_subtitle: {
+        fontSize: Platform.OS === 'android' ? 14 : 12,
+        color: COLOR.GRAY_DARK,
+        fontWeight: "400",
+        paddingVertical: Platform.OS === 'android' ? 1 : 2,
+    },
+
+    containerAccount_accountId: {
+        fontSize: Platform.OS === 'android' ? 14.5 : 12.5,
+        color: COLOR.BLUE_DARK,
+    },
+
+    containerAccount_titleBalance: {
+        fontSize: Platform.OS === 'android' ? 14 : 12,
+        color: COLOR.GRAY_DARK,
+        textAlign: 'right'
+    },
+
+    containerAccount_balance: {
+        fontSize: Platform.OS === 'android' ? 18 : 15,
+        color: COLOR.BLACK,
+        fontWeight: "600",
+        textAlign: 'right',
+        paddingTop: 2
+    },
+
     containerForm: {
-        // backgroundColor: COLOR.WHITE,
         width: '100%',
         // height: 150
     },

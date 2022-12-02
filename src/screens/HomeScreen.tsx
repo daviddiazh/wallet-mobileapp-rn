@@ -52,7 +52,7 @@ export const HomeScreen = () => {
                 contentInsetAdjustmentBehavior="automatic"
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
-                
+
                 refreshControl={
                     <RefreshControl 
                         refreshing={ refresh }
@@ -79,7 +79,7 @@ export const HomeScreen = () => {
                     </View>
                 </View>
                 <View style={{ ...styles.container }}>
-                    <Text style={{ ...styles.titleMyMovements }}>Mis movimientos</Text>
+                    <Text style={{ ...styles.titleMyMovements }}>Mis movimientos</Text> 
                     <View style={{ ...styles.containerMyMovements }}>
 
                         { /* //TODO: Renderizar los movimientos */ }
@@ -99,7 +99,13 @@ export const HomeScreen = () => {
                                             >
                                                 <View style={{ ...styles.containerAmountAndReason }}>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                        <Icon name="analytics-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
+                                                        {
+                                                            movement.accountId_Income == account._id ? (
+                                                                <Icon name="trending-up-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
+                                                            ) : (
+                                                                <Icon name="trending-down-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
+                                                            )
+                                                        }
                                                         <Text
                                                             style={{ ...styles.descriptionReason }}
                                                         >
