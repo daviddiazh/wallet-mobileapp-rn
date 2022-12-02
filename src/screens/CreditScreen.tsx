@@ -60,10 +60,10 @@ export const CreditScreen = () => {
                 <View style={{ ...styles.mainContainer }}>
                     <View style={{ ...styles.containerForm }}>
 
-                        {/* <View style={{ marginBottom: 50 }}>
-                            <Text>Saldo actual:</Text>
-                            <Text>{ account.balance }</Text>
-                        </View> */}
+                        <View style={{ ...styles.containerAccount }}>
+                            <Text style={{ ...styles.containerAccount_titleBalance }}>Saldo actual</Text>
+                            <Text style={{ ...styles.containerAccount_balance }}>{ account.balance }</Text>
+                        </View>
 
                         <View style={ styles.textInputBackground }>
                             <TextInput
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     },
 
     mainContainer: {
-        height: '96%',
+        height: '90%',
         justifyContent: 'center',
         alignItems: 'center',
         // backgroundColor: 'pink'
@@ -128,6 +128,24 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'android' ? 24 : 20,
         color: COLOR.BLACK,
         fontWeight: "600",
+    },
+
+    containerAccount: {
+        marginBottom: 100
+    },
+
+    containerAccount_titleBalance: {
+        fontSize: Platform.OS === 'android' ? 15 : 13,
+        color: COLOR.GRAY_DARK,
+        textAlign: 'center'
+    },
+
+    containerAccount_balance: {
+        fontSize: Platform.OS === 'android' ? 22 : 18,
+        color: COLOR.BLACK,
+        fontWeight: "600",
+        textAlign: 'center',
+        paddingTop: 2
     },
 
     containerForm: {
