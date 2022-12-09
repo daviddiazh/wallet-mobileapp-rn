@@ -6,11 +6,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
 import { AuthContext } from '../context/auth/AuthContext';
+import { useDispatch } from 'react-redux';
+import { signUp_thunks } from '../store/auth/thunks';
 
 export const SignUpScreen = () => {
 
     const navigator: any = useNavigation();
-    const { signUp, error, removeError } = useContext( AuthContext );
+    // const { signUp, error, removeError } = useContext( AuthContext );
+
+    const dispatch: any = useDispatch();
 
     const { fullName, phone, email, password, onChange } = useForm({
         fullName: '',
@@ -21,12 +25,13 @@ export const SignUpScreen = () => {
 
     const onSignUp = () => {
         Keyboard.dismiss();
-        signUp(
-            fullName,
-            phone,
-            email,
-            password
-        );
+        // signUp(
+        //     fullName,
+        //     phone,
+        //     email,
+        //     password
+        // );
+        dispatch( signUp_thunks({ fullName, email, password, phone }) );
         // navigator.navigate("WelcomeScreen")
     }
 

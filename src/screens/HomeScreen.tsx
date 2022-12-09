@@ -11,6 +11,8 @@ import { MovementContext } from '../context/movements/MovementContext';
 import { useState } from 'react';
 import { Loading } from '../components/Loading';
 
+
+
 export const HomeScreen = () => {
 
     const navigator: any = useNavigation();
@@ -19,7 +21,7 @@ export const HomeScreen = () => {
     const { account, findByUserEmail } = useContext( AccountContext );
     const { movements, myMovementsByAccountId } = useContext( MovementContext );
     
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
 
     useEffect(() =>
@@ -41,9 +43,9 @@ export const HomeScreen = () => {
         findByUserEmail(user?.email!);
         myMovementsByAccountId(account?._id!);
         setIsLoading(false)
-    }, [account.balance ]);
+    }, [ account._id ]);
 
-    if( isLoading ) return <Loading />
+    if( isLoading ) return <Loading />;
 
     return (
         <SafeAreaView style={{ ...styles.main }}>
@@ -66,10 +68,6 @@ export const HomeScreen = () => {
                 <View 
                     style={{ ...styles.amountContainer, }}
                 >
-                    {/* <Image
-                        source={require('../images/dale!.png')}
-                        style={{width: 50, height: 20, marginHorizontal: 20}}
-                    /> */}
                     <View style={{ ...styles.containerIcon }}>
                         <Icon name="wallet-outline" style={{ ...styles.iconMoney }} />
                     </View>
@@ -82,9 +80,8 @@ export const HomeScreen = () => {
                     <Text style={{ ...styles.titleMyMovements }}>Mis movimientos</Text> 
                     <View style={{ ...styles.containerMyMovements }}>
 
-                        { /* //TODO: Renderizar los movimientos */ }
                         {
-                            movements.length === 0 ? (
+                            movements.length === 0 && isLoading == false ? (
                                 <View style={{ ...styles.noContentContainer }}>
                                     <Icon name="file-tray-full-outline" style={{ ...styles.iconNoContent }} />
                                     <Text style={{ ...styles.textNoContent }}>No has realizado ningún movimiento</Text>
@@ -264,3 +261,13 @@ const styles = StyleSheet.create({
     }
 
 });
+
+
+
+
+// export const HomeScreen = () => {
+
+//     return (
+//         <Text>Hello world</Text>
+//     )
+// }

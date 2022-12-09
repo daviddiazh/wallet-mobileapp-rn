@@ -11,16 +11,31 @@ import SplashScreen from 'react-native-splash-screen';
 import { AccountProvider } from './src/context/account/AccountProvider';
 import { MovementsProvider } from './src/context/movements/MovementProvider';
 
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from './src/graphql/apolloClient';
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './src/store/store';
+
+
+// const ApplicationState = ({ children }: any) => {
+//   return (
+//     <AuthProvider>
+//       <AccountProvider>
+//         <MovementsProvider>
+//           { children }
+//         </MovementsProvider>
+//       </AccountProvider>
+//     </AuthProvider>
+//   );
+// }
 
 const ApplicationState = ({ children }: any) => {
   return (
-    <AuthProvider>
-      <AccountProvider>
-        <MovementsProvider>
-          { children }
-        </MovementsProvider>
-      </AccountProvider>
-    </AuthProvider>
+    <ReduxProvider store={ store }>
+      <ApolloProvider client={ apolloClient }>
+        { children }
+      </ApolloProvider>
+    </ReduxProvider>
   );
 }
 

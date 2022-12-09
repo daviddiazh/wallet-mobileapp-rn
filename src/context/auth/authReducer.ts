@@ -11,7 +11,7 @@ type AuthActionTypes =
     |   { type: 'signUp - ActionType', payload: { user: IUser, token: string, } }
     |   { type: 'addError - ActionType', payload: Object }
     |   { type: 'removeError - ActionType' }
-    |   { type: 'notAuthenticated - ActionType' }
+    |   { type: 'notAuthenticated - ActionType' } 
     |   { type: 'logout - ActionType' }
 
 export const authReducer = ( state: AuthState, action: AuthActionTypes ): AuthState => {
@@ -51,7 +51,7 @@ export const authReducer = ( state: AuthState, action: AuthActionTypes ): AuthSt
                 user: null,
             }
 
-       default:
+        default:
            return state;
     }
 

@@ -9,6 +9,7 @@ import { Loading } from '../components/Loading';
 import { Tabs } from './Tabs';
 import { CreditScreen } from '../screens/CreditScreen';
 import { PaymentScreen } from '../screens/PaymentScreen';
+import { useSelector } from 'react-redux';
 // import { ApprovedCreditScreen } from '../screens/ApprovedCreditScreen';
 
 
@@ -27,9 +28,11 @@ const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
 
-    const { userStatus } = useContext( AuthContext );
+    // const { userStatus } = useContext( AuthContext );
 
-    if( userStatus === 'checking' ) return <Loading />
+    const { status } = useSelector( (state: any) => state.auth );
+
+    if( status === 'checking' ) return <Loading />
 
     return (
         <Stack.Navigator
@@ -45,25 +48,29 @@ export const StackNavigator = () => {
                 }
             }}
         >
-            {
-                ( userStatus === 'not-authenticated' ) 
+            {/* {
+                ( status === 'not-authenticated' ) 
                     ? (
                         <>
                             <Stack.Screen name="LoginScreen" component={ LoginScreen } />
-                            <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
+                            <Stack.Screen name="SignUpScreen" component={ SignUpScreen } /> */}
                             {/* <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } /> */}
-                        </>
+                        {/* </>
                     ) 
                     : (
                         <Stack.Group>
                             <Stack.Screen name="Tabs" component={ Tabs } />
                             <Stack.Screen name="HomeScreen" component={ HomeScreen } />
                             <Stack.Screen name="CreditScreen" component={ CreditScreen } />
+                            <Stack.Screen name="PaymentScreen" component={ PaymentScreen } /> */}
                             {/* <Stack.Screen name="ApprovedCreditScreen" component={ ApprovedCreditScreen } /> */}
-                            <Stack.Screen name="PaymentScreen" component={ PaymentScreen } />
-                        </Stack.Group>
+                        {/* </Stack.Group>
                     ) 
-            }
+            } */}
+
+
+            <Stack.Screen name="LoginScreen" component={ LoginScreen } />
+            <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
         </Stack.Navigator>
     );
 }
