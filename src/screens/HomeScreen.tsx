@@ -10,6 +10,9 @@ import { AccountContext } from '../context/account/AccountContext';
 import { MovementContext } from '../context/movements/MovementContext';
 import { useState } from 'react';
 import { Loading } from '../components/Loading';
+import { useSelector, useDispatch } from 'react-redux';
+import { findAccountByUserIdReducer } from '../store/account/accountSlice';
+import { findAccountByUserId_thunk } from '../store/account/thunks';
 
 
 
@@ -17,11 +20,17 @@ export const HomeScreen = () => {
 
     const navigator: any = useNavigation();
 
-    const { user } = useContext( AuthContext );
-    const { account, findByUserEmail } = useContext( AccountContext );
-    const { movements, myMovementsByAccountId } = useContext( MovementContext );
+    const dispatch: any = useDispatch();
+
+    const { user } = useSelector((state: any) => state.auth );
     
-    const [isLoading, setIsLoading] = useState(false)
+    const { account, isLoadingAccount } = useSelector((state: any) => state.account );
+    console.log({account})
+
+    const { movements } = useSelector((state: any) => state.movement );
+    console.log({movements})
+    
+    // const [isLoading, setIsLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
 
     useEffect(() =>
@@ -33,19 +42,22 @@ export const HomeScreen = () => {
     const onRefresh = () => {
         setRefresh(true);
 
-        findByUserEmail(user?.email!);
-        myMovementsByAccountId(account?._id!);
+        // findByUserEmail(user?.email!);
+        // myMovementsByAccountId(account?._id!);
         setRefresh(false);
     }
 
     useEffect(() => {
-        setIsLoading(true);
-        findByUserEmail(user?.email!);
-        myMovementsByAccountId(account?._id!);
-        setIsLoading(false)
-    }, [ account._id ]);
+        dispatch( findAccountByUserId_thunk( user?.id ) );
 
-    if( isLoading ) return <Loading />;
+    //     setIsLoading(true);
+    //     findByUserEmail(user?.email!);
+    //     myMovementsByAccountId(account?._id!);
+    //     setIsLoading(false)
+    // }, [ account._id ]);
+    }, []);
+
+    // if( isLoading ) return <Loading />;
 
     return (
         <SafeAreaView style={{ ...styles.main }}>
@@ -81,7 +93,7 @@ export const HomeScreen = () => {
                     <View style={{ ...styles.containerMyMovements }}>
 
                         {
-                            movements.length === 0 && isLoading == false ? (
+                            movements.length === 0 ? (
                                 <View style={{ ...styles.noContentContainer }}>
                                     <Icon name="file-tray-full-outline" style={{ ...styles.iconNoContent }} />
                                     <Text style={{ ...styles.textNoContent }}>No has realizado ningún movimiento</Text>
@@ -89,7 +101,7 @@ export const HomeScreen = () => {
                             ) : (
                                 <ScrollView>
                                     {
-                                        movements.map(movement => (
+                                        movements.map((movement: any) => (
                                             <View 
                                                 key={ movement._id }
                                                 style={{ ...styles.containerMovement }}    

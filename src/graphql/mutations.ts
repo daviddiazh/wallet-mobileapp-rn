@@ -16,7 +16,7 @@ export const SIGNUP_MUTATION = gql`
             token
         }
     }
-`
+`;
 
 export const LOGIN_MUTATION = gql`
     mutation Login($login: LoginDtoGQL!) {
@@ -28,4 +28,4 @@ export const LOGIN_MUTATION = gql`
             token
         }
     }
-`
+`;

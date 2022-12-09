@@ -3,6 +3,14 @@ import { checkingReducer, signInReducer } from './authSlice';
 import { apolloClient } from '../../graphql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../../graphql/mutations';
 
+export const checkingAuthentication = () => {
+    return async( dispatch: any ) => {
+
+        dispatch( checkingReducer() );
+    }
+}
+
+
 interface SignUpProps {
     fullName: string;
     phone: string; 
@@ -14,9 +22,9 @@ interface SignUpProps {
 export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) => {
     return async ( dispatch: any ) => {
 
-        const cellphone = parseInt( phone );
-
         dispatch( checkingReducer() );
+        
+        const cellphone = parseInt( phone );
 
         const { data: { signUp } } = await apolloClient.mutate({
             mutation: SIGNUP_MUTATION,
@@ -35,6 +43,7 @@ export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) =>
 
     }
 }
+
 
 interface LoginProps {
     email: string;
@@ -60,3 +69,4 @@ export const login_thunk = ({email, password}: LoginProps) => {
 
     }
 }
+

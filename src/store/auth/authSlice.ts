@@ -26,7 +26,7 @@ export const authSlice = createSlice({
 
         addError: ( state, { payload } ) => {
             //TODO ...
-        }
+        },
     }
 });
 
