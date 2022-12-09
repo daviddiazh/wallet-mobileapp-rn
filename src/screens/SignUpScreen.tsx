@@ -7,7 +7,7 @@ import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
 import { AuthContext } from '../context/auth/AuthContext';
 import { useDispatch } from 'react-redux';
-import { signUp_thunks } from '../store/auth/thunks';
+import { signUp_thunk } from '../store/auth/thunks';
 
 export const SignUpScreen = () => {
 
@@ -31,7 +31,7 @@ export const SignUpScreen = () => {
         //     email,
         //     password
         // );
-        dispatch( signUp_thunks({ fullName, email, password, phone }) );
+        dispatch( signUp_thunk({ fullName, email, password, phone }) );
         // navigator.navigate("WelcomeScreen")
     }
 

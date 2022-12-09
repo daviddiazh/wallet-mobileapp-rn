@@ -1,16 +1,17 @@
 import { useMutation } from '@apollo/client';
 import { checkingReducer, signInReducer } from './authSlice';
 import { apolloClient } from '../../graphql/apolloClient';
-import { SIGNUP_MUTATION } from '../../graphql/mutations';
+import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../../graphql/mutations';
 
 interface SignUpProps {
-    fullName: string, 
-    phone: string, 
-    email: string, 
-    password: string
+    fullName: string;
+    phone: string; 
+    email: string; 
+    password: string;
+    profilePicture?: string;
 }
 
-export const signUp_thunks = ({fullName, email, password, phone}: SignUpProps) => {
+export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) => {
     return async ( dispatch: any ) => {
 
         const cellphone = parseInt( phone );
@@ -30,7 +31,32 @@ export const signUp_thunks = ({fullName, email, password, phone}: SignUpProps) =
             }
         })
 
-        dispatch( signInReducer( signUp.user ) );
+        dispatch( signInReducer( signUp ) );
+
+    }
+}
+
+interface LoginProps {
+    email: string;
+    password: string;
+}
+
+export const login_thunk = ({email, password}: LoginProps) => {
+    return async ( dispatch: any ) => {
+
+        dispatch( checkingReducer() );
+
+        const { data: { login } } = await apolloClient.mutate({
+            mutation: LOGIN_MUTATION,
+            variables: {
+                login: {
+                    email,
+                    password,
+                },
+            },
+        });
+
+        dispatch( signInReducer( login ) );
 
     }
 }

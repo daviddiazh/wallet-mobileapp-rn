@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     status: 'not-authenticated', // 'checking', 'authenticated', 'not-authenticated'
     user: {},
+    token: undefined,
     errorMessage: undefined,
 }
 
@@ -17,13 +18,16 @@ export const authSlice = createSlice({
         },
 
         signInReducer: ( state, { payload } ) => {
-            console.log({ payload })
-
             state.status = 'authenticated';
-            state.user = payload;
+            state.user = payload.user;
+            state.token = payload.token;
             state.errorMessage = undefined;
         },
+
+        addError: ( state, { payload } ) => {
+            //TODO ...
+        }
     }
 });
 
-export const { checkingReducer, signInReducer, } = authSlice.actions;
+export const { checkingReducer, signInReducer, addError } = authSlice.actions;

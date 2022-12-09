@@ -7,11 +7,15 @@ import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
+import { login_thunk } from '../store/auth/thunks';
+import { useDispatch } from 'react-redux';
 
 export const LoginScreen = () => {
 
     const navigator: NavigationProp<any, any> = useNavigation();
     const { login, error, removeError } = useContext( AuthContext );
+
+    const dispatch: any = useDispatch();
 
     const { email, password, onChange } = useForm({
         email: '',
@@ -37,7 +41,8 @@ export const LoginScreen = () => {
     const onLogin = () => {
         Keyboard.dismiss();
         if( email.length < 4 || password.length < 2 ) return;
-        login(email, password);
+        // login(email, password);
+        dispatch( login_thunk({ email, password }) );
         // navigator.navigate("HomeScreen");
     }
 

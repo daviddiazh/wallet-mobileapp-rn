@@ -12,8 +12,18 @@ export const SIGNUP_MUTATION = gql`
             user {
                 id
                 fullName
-                phone
-                email
+            }
+            token
+        }
+    }
+`
+
+export const LOGIN_MUTATION = gql`
+    mutation Login($login: LoginDtoGQL!) {
+        login(login: $login) {
+            user {
+                id
+                fullName
             }
             token
         }
