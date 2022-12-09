@@ -13,6 +13,7 @@ import { Loading } from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
 import { findAccountByUserIdReducer } from '../store/account/accountSlice';
 import { findAccountByUserId_thunk } from '../store/account/thunks';
+import { myMovementsByAccountId_thunk } from '../store/movement/thunks';
 
 
 
@@ -41,6 +42,8 @@ export const HomeScreen = () => {
 
     const onRefresh = () => {
         setRefresh(true);
+        dispatch( findAccountByUserId_thunk( user?.id ) );
+        dispatch( myMovementsByAccountId_thunk( account?._id ) );
 
         // findByUserEmail(user?.email!);
         // myMovementsByAccountId(account?._id!);
@@ -49,6 +52,7 @@ export const HomeScreen = () => {
 
     useEffect(() => {
         dispatch( findAccountByUserId_thunk( user?.id ) );
+        dispatch( myMovementsByAccountId_thunk( account?._id ) );
 
     //     setIsLoading(true);
     //     findByUserEmail(user?.email!);

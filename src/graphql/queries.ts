@@ -13,6 +13,8 @@ export const FINDACCOUNTBYUSERID_ACCOUNT = gql`
 export const MYMOVEMENTSBYACCOUNTID_MOVEMENT = gql`
     query MyMovementsByAccountId($myMovementsByAccountId: String!) {
         myMovementsByAccountId(id: $myMovementsByAccountId) {
+            accountId_Income
+            accountId_Outcome
             reason
             amount
             createdAt

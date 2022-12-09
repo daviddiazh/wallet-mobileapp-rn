@@ -20,8 +20,6 @@ export const findAccountByUserId_thunk = ( id: string ) => {
                 findByUserId: id
             },
         });
-        console.log('dossssssss')
-        console.log({ findByUserId })
 
         dispatch( findAccountByUserIdReducer( findByUserId ) );
 

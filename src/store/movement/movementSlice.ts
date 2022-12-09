@@ -15,8 +15,6 @@ export const movementSlice = createSlice({
         },
 
         myMovementsByAccountIdReducer: ( state, { payload } ) => {
-            console.log('PAYLOADDDD MOVEMENTS: ', payload);
-
             state.movements = payload;
             state.isLoadingMovements = false;
             state.errorMessage = undefined;
