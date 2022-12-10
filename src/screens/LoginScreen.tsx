@@ -8,40 +8,46 @@ import { useForm } from '../hooks/useForm';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { login_thunk } from '../store/auth/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearErrorReducer } from '../store/auth/authSlice';
 
 export const LoginScreen = () => {
 
     const navigator: NavigationProp<any, any> = useNavigation();
-    const { login, error, removeError } = useContext( AuthContext );
+    // const { login, error, removeError } = useContext( AuthContext );
 
     const dispatch: any = useDispatch();
+    const { errorMessage } = useSelector( (state: any) => state.auth );
 
     const { email, password, onChange } = useForm({
         email: '',
         password: ''
     });
 
-    // useEffect(() => {
-    //     if( error?.length === 0 ) return;
+    const onClearError = () => {
+        dispatch( clearErrorReducer() )
+    }
 
-    //     Alert.alert(
-    //         'Login incorrecto', 
-    //         'CHANGE VALUE IN ALERT (LOGIN SCREEN)',
-    //         [
-    //             {
-    //                 text: 'Ok',
-    //                 onPress: removeError
-    //             }
-    //         ]
-    //     )
-    // }, [error])
+    useEffect(() => {
+        if( errorMessage === undefined ) return;
+
+        Alert.alert(
+            'Login incorrecto', 
+            `${ errorMessage }`,
+            [
+                {
+                    text: 'Ok',
+                    onPress: onClearError
+                }
+            ]
+        )
+    }, [ errorMessage ]);
     
 
     const onLogin = () => {
         Keyboard.dismiss();
         if( email.length < 4 || password.length < 2 ) return;
-        // login(email, password);
+        
         dispatch( login_thunk({ email, password }) );
         // navigator.navigate("HomeScreen");
     }

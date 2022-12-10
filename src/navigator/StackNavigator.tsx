@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+// import React, { useContext, useEffect } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthContext } from '../context/auth/AuthContext';
 import { LoginScreen } from '../screens/LoginScreen';
@@ -9,9 +9,13 @@ import { Loading } from '../components/Loading';
 import { Tabs } from './Tabs';
 import { CreditScreen } from '../screens/CreditScreen';
 import { PaymentScreen } from '../screens/PaymentScreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkToken_thunk, logout_thunk } from '../store/auth/thunks';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 // import { ApprovedCreditScreen } from '../screens/ApprovedCreditScreen';
-
+// import { checkToken_thunk } from '../store/auth/thunks';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type RootStackParams = {
     LoginScreen: undefined, 
@@ -29,10 +33,24 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
 
     // const { userStatus } = useContext( AuthContext );
-
+    // const dispatch: any = useDispatch();
+    
     const { status } = useSelector( (state: any) => state.auth );
 
+    // const checkToken = async () => {
+    //     const token: any = await AsyncStorage.getItem('token');
+
+    //     dispatch( checkToken_thunk( token ) );
+        // await AsyncStorage.removeItem('token');
+    // }
+
+    // useEffect(() => {
+    //     checkToken();
+    // }, []);
+
     if( status === 'checking' ) return <Loading />
+
+    console.log({status})
 
     return (
         <Stack.Navigator

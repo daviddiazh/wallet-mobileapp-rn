@@ -13,21 +13,11 @@ import { MovementsProvider } from './src/context/movements/MovementProvider';
 
 import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from './src/graphql/apolloClient';
-import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as ReduxProvider, useDispatch } from 'react-redux';
 import { store } from './src/store/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { checkToken_thunk } from './src/store/auth/thunks';
 
-
-// const ApplicationState = ({ children }: any) => {
-//   return (
-//     <AuthProvider>
-//       <AccountProvider>
-//         <MovementsProvider>
-//           { children }
-//         </MovementsProvider>
-//       </AccountProvider>
-//     </AuthProvider>
-//   );
-// }
 
 const ApplicationState = ({ children }: any) => {
   return (

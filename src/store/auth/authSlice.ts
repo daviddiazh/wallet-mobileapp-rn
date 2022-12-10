@@ -24,10 +24,29 @@ export const authSlice = createSlice({
             state.errorMessage = undefined;
         },
 
-        addError: ( state, { payload } ) => {
-            //TODO ...
+        logoutReducer: ( state ) => {
+            state.status = 'not-authenticated';
+            state.user = {};
+            state.errorMessage = undefined;
+        },
+
+        addErrorReducer: ( state, { payload } ) => {
+            state.status = 'not-authenticated';
+            state.user = {};
+            state.token = undefined;
+            state.errorMessage = payload;
+        },
+
+        clearErrorReducer: ( state ) => {
+            state.errorMessage = undefined;
         },
     }
 });
 
-export const { checkingReducer, signInReducer, addError } = authSlice.actions;
+export const { 
+    checkingReducer, 
+    signInReducer, 
+    logoutReducer, 
+    addErrorReducer,
+    clearErrorReducer
+} = authSlice.actions;

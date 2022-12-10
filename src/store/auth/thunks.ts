@@ -1,14 +1,16 @@
 import { useMutation } from '@apollo/client';
-import { checkingReducer, signInReducer } from './authSlice';
+import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from './authSlice';
 import { apolloClient } from '../../graphql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../../graphql/mutations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CHECKTOKEN_QUERY } from '../../graphql/queries';
 
-export const checkingAuthentication = () => {
-    return async( dispatch: any ) => {
+// export const checkingAuthentication = () => {
+//     return async( dispatch: any ) => {
 
-        dispatch( checkingReducer() );
-    }
-}
+//         dispatch( checkingReducer() );
+//     }
+// }
 
 
 interface SignUpProps {
@@ -41,6 +43,8 @@ export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) =>
 
         dispatch( signInReducer( signUp ) );
 
+        await AsyncStorage.setItem('token', signUp.token);
+
     }
 }
 
@@ -65,8 +69,48 @@ export const login_thunk = ({email, password}: LoginProps) => {
             },
         });
 
+        if ( login.code ) {
+            return dispatch( addErrorReducer( login.description ) );
+        }
+
         dispatch( signInReducer( login ) );
+
+        await AsyncStorage.setItem('token', login.token);
 
     }
 }
 
+
+export const checkToken_thunk = ( token: string ) => {
+    return async ( dispatch: any ) => {
+
+        dispatch( checkingReducer() );
+
+        // const { data: { checkToken } } = await apolloClient.query({
+        const resp = await apolloClient.query({
+            query: CHECKTOKEN_QUERY,
+            variables: {
+                token
+            },
+        }).then().catch(error => console.log({error}))
+        console.log('resp: ', resp)
+
+        // await AsyncStorage.setItem('token', data.checkToken.token);
+        
+        // dispatch( signInReducer( data.checkToken ) );
+
+    }
+}
+
+
+export const logout_thunk = () => {
+    return async ( dispatch: any ) => {
+
+        dispatch( checkingReducer() );
+        
+        await AsyncStorage.removeItem('token');
+        
+        dispatch( logout_thunk() );
+
+    }
+}

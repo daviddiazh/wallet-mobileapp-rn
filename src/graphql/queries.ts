@@ -21,3 +21,16 @@ export const MYMOVEMENTSBYACCOUNTID_MOVEMENT = gql`
         }
     }
 `;
+
+
+export const CHECKTOKEN_QUERY = gql`
+    query Query($token: String!) {
+        checkToken(token: $token) {
+            user {
+                _id
+                fullName
+            }
+            token
+        }
+    }
+`

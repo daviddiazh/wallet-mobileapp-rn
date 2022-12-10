@@ -6,14 +6,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
 import { COLOR, FONT_SIZES } from '../theme/index';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AccountContext } from '../context/account/AccountContext';
-import { MovementContext } from '../context/movements/MovementContext';
 import { useState } from 'react';
 import { Loading } from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
-import { findAccountByUserIdReducer } from '../store/account/accountSlice';
 import { findAccountByUserId_thunk } from '../store/account/thunks';
 import { myMovementsByAccountId_thunk } from '../store/movement/thunks';
+import { logout_thunk } from '../store/auth/thunks';
+import { logoutReducer } from '../store/auth/authSlice';
 
 
 
@@ -23,7 +22,7 @@ export const HomeScreen = () => {
 
     const dispatch: any = useDispatch();
 
-    const { user } = useSelector((state: any) => state.auth );
+    const { user, status } = useSelector((state: any) => state.auth );
     
     const { account, isLoadingAccount } = useSelector((state: any) => state.account );
     console.log({account})
@@ -59,9 +58,10 @@ export const HomeScreen = () => {
     //     myMovementsByAccountId(account?._id!);
     //     setIsLoading(false)
     // }, [ account._id ]);
-    }, []);
+    }, [ account, movements ]);
 
     // if( isLoading ) return <Loading />;
+    // dispatch( logoutReducer() );
 
     return (
         <SafeAreaView style={{ ...styles.main }}>

@@ -19,13 +19,29 @@ export const SIGNUP_MUTATION = gql`
 `;
 
 export const LOGIN_MUTATION = gql`
-    mutation Login($login: LoginDtoGQL!) {
+    # mutation Login($login: LoginDtoGQL!) {
+    #     login(login: $login) {
+    #         user {
+    #             id
+    #             fullName
+    #         }
+    #         token
+    #     }
+    # }
+
+    mutation Mutation($login: LoginDtoGQL!) {
         login(login: $login) {
-            user {
-                id
-                fullName
+            ... on SignUpOrLogin {
+                user {
+                    id
+                    fullName
+                }
+                token
             }
-            token
+            ... on StatusError {
+                code
+                description
+            }
         }
     }
 `;
