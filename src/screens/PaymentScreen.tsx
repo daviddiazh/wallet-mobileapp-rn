@@ -9,14 +9,20 @@ import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { MovementContext } from '../context/movements/MovementContext';
 import { AccountContext } from '../context/account/AccountContext';
 import { AuthContext } from '../context/auth/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { moneyTransfer_thunk } from '../store/movement/thunks';
 
 export const PaymentScreen = () => {
 
     const navigator: any = useNavigation();
+    const dispatch: any = useDispatch();
 
-    const { user } = useContext( AuthContext );
-    const { account, findByUserEmail } = useContext( AccountContext );
-    const { moneyTransfer } = useContext( MovementContext );
+    // const { user } = useContext( AuthContext );
+    // const { account, findByUserEmail } = useContext( AccountContext );
+    // const { moneyTransfer } = useContext( MovementContext );
+
+    const { user } = useSelector((state: any) => state.auth );
+    const { account } = useSelector((state: any) => state.account );
 
     let { accountId_Income, accountId_Outcome, amount, reason, onChange, resetFields } = useForm({
         accountId_Income: '',
@@ -45,7 +51,14 @@ export const PaymentScreen = () => {
 
     const onMoneyTransfer = () => {
         accountId_Outcome = account?._id!
-        moneyTransfer(accountId_Income, accountId_Outcome, reason, amount);
+        console.log('accountId_Outcome: ', accountId_Outcome)
+        // moneyTransfer(accountId_Income, accountId_Outcome, reason, amount);
+        dispatch( moneyTransfer_thunk({
+            accountId_Income: account?._id,
+            accountId_Outcome,
+            amount,
+            reason
+        }) )
         navigator.navigate('HomeScreen')
 
         resetFields("accountId_Income");
@@ -53,9 +66,9 @@ export const PaymentScreen = () => {
         resetFields("reason");
     }
 
-    useEffect(() => {
-        findByUserEmail(user?.email!);
-    }, [account.balance ]);
+    // useEffect(() => {
+    //     findByUserEmail(user?.email!);
+    // }, [account.balance ]);
 
     return (
         <SafeAreaView>

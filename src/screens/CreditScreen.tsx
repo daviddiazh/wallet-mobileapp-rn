@@ -8,14 +8,21 @@ import { useForm } from '../hooks/useForm';
 import { MovementContext } from '../context/movements/MovementContext';
 import { AccountContext } from '../context/account/AccountContext';
 import { AuthContext } from '../context/auth/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { findAccountByUserId_thunk } from '../store/account/thunks';
+import { requestCredit_thunk } from '../store/movement/thunks';
 
 export const CreditScreen = () => {
 
     const navigator: any = useNavigation();
+    const dispatch: any = useDispatch();
 
-    const { user } = useContext( AuthContext );
-    const { account, findByUserEmail } = useContext( AccountContext );
-    const { requestCredit } = useContext( MovementContext );
+    // const { user } = useContext( AuthContext );
+    // const { account, findByUserEmail } = useContext( AccountContext );
+    // const { requestCredit } = useContext( MovementContext );
+
+    const { user } = useSelector((state: any) => state.auth );
+    const { account } = useSelector((state: any) => state.account );
 
     const { amount, reason, onChange, resetFields } = useForm({
         amount: '',
@@ -41,7 +48,13 @@ export const CreditScreen = () => {
     }
 
     const onRequestCredit = () => {
-        requestCredit(account?._id!, amount, reason);
+        // requestCredit(account?._id!, amount, reason);
+        dispatch( requestCredit_thunk({
+            accountId_Income: account?._id,
+            amount,
+            reason
+        }) );
+
         navigator.navigate('HomeScreen')
         // navigator.navigate('ApprovedCreditScreen')
         resetFields("amount");
@@ -49,8 +62,18 @@ export const CreditScreen = () => {
     }
 
     useEffect(() => {
-        findByUserEmail(user?.email!);
-    }, [account.balance ]);
+        // dispatch( findAccountByUserId_thunk( user?.id ) );
+
+    //     setIsLoading(true);
+    //     findByUserEmail(user?.email!);
+    //     myMovementsByAccountId(account?._id!);
+    //     setIsLoading(false)
+    // }, [ account._id ]);
+    }, []);
+
+    // useEffect(() => {
+    //     findByUserEmail(user?.email!);
+    // }, [account.balance ]);
 
     return (
         <SafeAreaView>
