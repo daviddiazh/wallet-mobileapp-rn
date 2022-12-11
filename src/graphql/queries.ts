@@ -24,13 +24,20 @@ export const MYMOVEMENTSBYACCOUNTID_MOVEMENT = gql`
 
 
 export const CHECKTOKEN_QUERY = gql`
-    query Query($token: String!) {
+    query CheckToken($token: String!) {
         checkToken(token: $token) {
-            user {
-                _id
-                fullName
+            ... on SignUpOrLogin {
+                user {
+                    _id
+                    fullName
+                }
+                token
             }
-            token
+            ... on StatusError {
+                code
+                title
+                description
+            }
         }
     }
-`
+`;

@@ -17,7 +17,7 @@ export const LoginScreen = () => {
     // const { login, error, removeError } = useContext( AuthContext );
 
     const dispatch: any = useDispatch();
-    const { errorMessage } = useSelector( (state: any) => state.auth );
+    const { errorMessage, titleError } = useSelector( (state: any) => state.auth );
 
     const { email, password, onChange } = useForm({
         email: '',
@@ -32,7 +32,7 @@ export const LoginScreen = () => {
         if( errorMessage === undefined ) return;
 
         Alert.alert(
-            'Login incorrecto', 
+            `${ titleError }`, 
             `${ errorMessage }`,
             [
                 {

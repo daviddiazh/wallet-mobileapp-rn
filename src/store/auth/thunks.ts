@@ -1,8 +1,7 @@
-import { useMutation } from '@apollo/client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from './authSlice';
 import { apolloClient } from '../../graphql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../../graphql/mutations';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CHECKTOKEN_QUERY } from '../../graphql/queries';
 
 // export const checkingAuthentication = () => {
@@ -41,6 +40,10 @@ export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) =>
             }
         })
 
+        if ( signUp.code ) {
+            return dispatch( addErrorReducer( signUp ) );
+        }
+
         dispatch( signInReducer( signUp ) );
 
         await AsyncStorage.setItem('token', signUp.token);
@@ -70,7 +73,7 @@ export const login_thunk = ({email, password}: LoginProps) => {
         });
 
         if ( login.code ) {
-            return dispatch( addErrorReducer( login.description ) );
+            return dispatch( addErrorReducer( login ) );
         }
 
         dispatch( signInReducer( login ) );
@@ -86,18 +89,20 @@ export const checkToken_thunk = ( token: string ) => {
 
         dispatch( checkingReducer() );
 
-        // const { data: { checkToken } } = await apolloClient.query({
-        const resp = await apolloClient.query({
+        const { data: { checkToken } } = await apolloClient.query({
             query: CHECKTOKEN_QUERY,
             variables: {
                 token
             },
-        }).then().catch(error => console.log({error}))
-        console.log('resp: ', resp)
+        });
 
-        // await AsyncStorage.setItem('token', data.checkToken.token);
+        if ( checkToken.code ) {
+            return dispatch( addErrorReducer( checkToken ) );
+        }
+
+        await AsyncStorage.setItem('token', checkToken.token);
         
-        // dispatch( signInReducer( data.checkToken ) );
+        dispatch( signInReducer( checkToken ) );
 
     }
 }
@@ -110,7 +115,7 @@ export const logout_thunk = () => {
         
         await AsyncStorage.removeItem('token');
         
-        dispatch( logout_thunk() );
+        dispatch( logoutReducer() );
 
     }
 }

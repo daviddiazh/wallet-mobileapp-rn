@@ -1,7 +1,6 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../context/auth/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
 import { COLOR, FONT_SIZES } from '../theme/index';
@@ -11,9 +10,6 @@ import { Loading } from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
 import { findAccountByUserId_thunk } from '../store/account/thunks';
 import { myMovementsByAccountId_thunk } from '../store/movement/thunks';
-import { logout_thunk } from '../store/auth/thunks';
-import { logoutReducer } from '../store/auth/authSlice';
-
 
 
 export const HomeScreen = () => {
@@ -23,6 +19,7 @@ export const HomeScreen = () => {
     const dispatch: any = useDispatch();
 
     const { user, status } = useSelector((state: any) => state.auth );
+    console.log({user})
     
     const { account, isLoadingAccount } = useSelector((state: any) => state.account );
     console.log({account})
@@ -44,24 +41,18 @@ export const HomeScreen = () => {
         dispatch( findAccountByUserId_thunk( user?.id ) );
         dispatch( myMovementsByAccountId_thunk( account?._id ) );
 
-        // findByUserEmail(user?.email!);
-        // myMovementsByAccountId(account?._id!);
         setRefresh(false);
     }
 
     useEffect(() => {
-        dispatch( findAccountByUserId_thunk( user?.id ) );
+        console.log('USER IN USEEFFECT: ', {user})
+        dispatch( findAccountByUserId_thunk( user?._id ) );
         dispatch( myMovementsByAccountId_thunk( account?._id ) );
-
-    //     setIsLoading(true);
-    //     findByUserEmail(user?.email!);
-    //     myMovementsByAccountId(account?._id!);
-    //     setIsLoading(false)
-    // }, [ account._id ]);
-    }, [ account, movements ]);
+    }, [ user, account, movements ]);
 
     // if( isLoading ) return <Loading />;
     // dispatch( logoutReducer() );
+    // console.log({status})
 
     return (
         <SafeAreaView style={{ ...styles.main }}>
@@ -79,7 +70,7 @@ export const HomeScreen = () => {
                 }
             >
                 <View style={{ ...styles.container }}>
-                    <Text style={{ ...styles.greeting, textAlign: 'center' }}>Hola, { user?.fullName.split(' ')[0] }</Text>
+                    <Text style={{ ...styles.greeting, textAlign: 'center' }}>Hola, { user?.fullName?.split(' ')[0] }</Text>
                 </View>
                 <View 
                     style={{ ...styles.amountContainer, }}
@@ -97,7 +88,7 @@ export const HomeScreen = () => {
                     <View style={{ ...styles.containerMyMovements }}>
 
                         {
-                            movements.length === 0 ? (
+                            movements?.length === 0 ? (
                                 <View style={{ ...styles.noContentContainer }}>
                                     <Icon name="file-tray-full-outline" style={{ ...styles.iconNoContent }} />
                                     <Text style={{ ...styles.textNoContent }}>No has realizado ningún movimiento</Text>
@@ -113,10 +104,10 @@ export const HomeScreen = () => {
                                                 <View style={{ ...styles.containerAmountAndReason }}>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                         {
-                                                            movement.accountId_Income == account._id ? (
+                                                            movement.accountId_Income == account?._id ? (
                                                                 <Icon name="trending-up-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
                                                             ) : (
-                                                                <Icon name="trending-down-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
+                                                                <Icon name="trending-down-outline" style={{ ...styles.iconAnalytics, color: movement?.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
                                                             )
                                                         }
                                                         <Text

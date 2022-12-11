@@ -25,12 +25,8 @@ export const SignUpScreen = () => {
 
     const onSignUp = () => {
         Keyboard.dismiss();
-        // signUp(
-        //     fullName,
-        //     phone,
-        //     email,
-        //     password
-        // );
+        if( email.length < 4 || password.length < 2 || password.length < 4 || phone.length < 7 ) return;
+
         dispatch( signUp_thunk({ fullName, email, password, phone }) );
         // navigator.navigate("WelcomeScreen")
     }

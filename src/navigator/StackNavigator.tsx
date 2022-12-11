@@ -13,9 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkToken_thunk, logout_thunk } from '../store/auth/thunks';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
-// import { ApprovedCreditScreen } from '../screens/ApprovedCreditScreen';
-// import { checkToken_thunk } from '../store/auth/thunks';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export type RootStackParams = {
     LoginScreen: undefined, 
@@ -25,7 +23,6 @@ export type RootStackParams = {
     Tabs: undefined,
     CreditScreen: undefined,
     PaymentScreen: undefined,
-    // ApprovedCreditScreen: undefined
 }
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -33,24 +30,26 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
 
     // const { userStatus } = useContext( AuthContext );
-    // const dispatch: any = useDispatch();
+    const dispatch: any = useDispatch();
     
     const { status } = useSelector( (state: any) => state.auth );
 
-    // const checkToken = async () => {
-    //     const token: any = await AsyncStorage.getItem('token');
+    const checkToken = async () => {
+        const token: any = await AsyncStorage.getItem('token');
 
-    //     dispatch( checkToken_thunk( token ) );
-        // await AsyncStorage.removeItem('token');
-    // }
+        if( !token ) {
+            dispatch( logout_thunk() );
+        }
+        
+        dispatch( checkToken_thunk( token ) );
+    }
 
-    // useEffect(() => {
-    //     checkToken();
-    // }, []);
+    useEffect(() => {
+        console.log({status})
+        checkToken();
+    }, []);
 
     if( status === 'checking' ) return <Loading />
-
-    console.log({status})
 
     return (
         <Stack.Navigator

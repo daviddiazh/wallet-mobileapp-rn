@@ -5,18 +5,27 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { AuthContext } from '../context/auth/AuthContext';
 import { COLOR } from '../theme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout_thunk } from '../store/auth/thunks';
 
 export const MenuScreen = () => {
 
     const navigator: any = useNavigation();
-    const { user, logout } = useContext( AuthContext );
+    // const { user, logout } = useContext( AuthContext );
+
+    const { user } = useSelector((state: any) => state.auth );
+    const dispatch: any = useDispatch();
+
+    const logout = () => {
+        dispatch( logout_thunk() );
+    }
 
     return (
         <SafeAreaView>
             <View style={{ ...styles.mainMenu }}>
                 <Text style={{ ...styles.titleMenu }}>Menú</Text>
                 <View style={{ ...styles.containerPicture }}>
-                    <Image 
+                    <Image
                         // source={{ uri: user?.profilePicture }}
                         source={{ uri: 'https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png' }}
                         style={{ ...styles.avatar }}
