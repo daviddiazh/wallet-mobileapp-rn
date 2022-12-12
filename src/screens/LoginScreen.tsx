@@ -105,24 +105,36 @@ export const LoginScreen = () => {
                             onPress={ onLogin }
                         >
                             <Text style={[ styles.textBtn ]}>Ingresar</Text>
+                            <Icon 
+                                name="arrow-forward-outline" 
+                                size={25} 
+                                color={COLOR.WHITE}
+                                style={{ marginLeft: 10 }}
+                            />
                         </TouchableOpacity>
 
-                        <Text style={{ textAlign: 'center', paddingVertical: 80 }}>Ó registrate, ¡es gratis!</Text>
+                        {/* <Text style={{ textAlign: 'center', paddingTop: 80 }}>Ó registrate, ¡es gratis!</Text> */}
+                        <View
+                            style={{
+                                ...styles.containerRegister
+                            }}
+                        >
+                            <Text style={{
+                                ...styles.textRegister
+                            }}
+                            >
+                                ¿Aún no estas registrado?
+                            </Text>
+                            <Text
+                                style={{
+                                    ...styles.textRegisterRed
+                                }}
+                                onPress={() => navigator.navigate("SignUpScreen")}
+                            > 
+                                Registrarme en dale!
+                            </Text>
+                        </View>
                     </View>
-
-                    <TouchableOpacity
-                        activeOpacity={0.9}
-                        style={[ styles.btnSignUp]}
-                        onPress={() => navigator.navigate("SignUpScreen")}
-                    >
-                        <Text style={[ styles.textBtn ]}>Crear una cuenta</Text>
-                        <Icon 
-                            name="arrow-forward-outline" 
-                            size={25} 
-                            color={COLOR.WHITE}
-                            style={{ marginLeft: 10 }}
-                        />
-                    </TouchableOpacity>
 
                 </View>
             </ScrollView>
@@ -133,7 +145,7 @@ export const LoginScreen = () => {
 const styles = StyleSheet.create({
     containerLogo: {
         alignItems: 'center',
-        marginTop: Platform.OS === 'android' ? 150 : 100,
+        marginTop: Platform.OS === 'android' ? 180 : 150,
     },
 
     logo: {
@@ -182,11 +194,14 @@ const styles = StyleSheet.create({
     },
 
     btnLogin: {
-        // backgroundColor: COLOR.BLUE,
-        backgroundColor: COLOR.BLUE_DALE,
-        paddingVertical: 15,
+        // backgroundColor: COLOR.BLUE_DALE,
+        backgroundColor: COLOR.RED_DALE,
+        paddingVertical: 10,
         borderRadius: 6,
-        marginTop: 8
+        marginTop: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
     textBtn: {
@@ -197,13 +212,33 @@ const styles = StyleSheet.create({
     },
 
     btnSignUp: {
-        backgroundColor: COLOR.BLUE_DALE,
+        // backgroundColor: COLOR.BLUE_DALE,
+        backgroundColor: COLOR.RED_DALE,
         paddingVertical: 16,
         borderRadius: 0,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: -30
-    }
+    },
+
+    containerRegister: {
+        paddingTop: 50,
+    },
+
+    textRegister: {
+        fontSize: Platform.OS === 'android' ? FONT_SIZES.TEXT_ANDROID : 13,
+        color: COLOR.BLACK,
+        fontWeight: "600",
+        textAlign: 'center'
+    },
+
+    textRegisterRed: {
+        fontSize: Platform.OS === 'android' ? FONT_SIZES.TEXT_ANDROID : 15,
+        color: COLOR.RED_DALE,
+        fontWeight: "600",
+        paddingTop: 12,
+        textAlign: 'center'
+    },
 
 });

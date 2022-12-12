@@ -11,6 +11,7 @@ export const COLOR = {
     GREEN: '#00a650',
     RED: '#8415b',
     RED_DARK: '#dc2626',
+    RED_DALE: '#fa2c46',
     YELLOW_DALE: '#f8c110'
 }
 

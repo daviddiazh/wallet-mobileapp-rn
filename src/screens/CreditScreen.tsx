@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity, Alert } from 'react-native';
+import { StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -21,11 +21,12 @@ export const CreditScreen = () => {
     });
 
     const openAlert = () => {
+        if( amount.length <= 3 || reason.length <= 4 ) return;
 
         Alert.alert(
-            `Espera 
+            `Espera
             `,
-            '¿Estás seguro de que deseas continuar?',
+            '¿Estás seguro(a) de que deseas continuar?',
             [
                 {
                     text: 'Cancelar',
@@ -39,15 +40,17 @@ export const CreditScreen = () => {
     }
 
     const onRequestCredit = () => {
+        Keyboard.dismiss();
+
         dispatch( requestCredit_thunk({
             accountId_Income: account?._id,
             amount,
             reason
         }) );
 
-        navigator.navigate('HomeScreen')
         resetFields("amount");
         resetFields("reason");
+        navigator.navigate('HomeScreen')
     }
 
     return (
@@ -180,8 +183,8 @@ const styles = StyleSheet.create({
     },
 
     btnRequestCredit: {
-        // backgroundColor: COLOR.BLUE,
-        backgroundColor: COLOR.BLUE_DALE,
+        // backgroundColor: COLOR.BLUE_DALE,
+        backgroundColor: COLOR.RED_DALE,
         paddingVertical: 15,
         // borderRadius: 6,
         borderRadius: 100,

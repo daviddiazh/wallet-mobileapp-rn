@@ -9,6 +9,7 @@ import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { moneyTransfer_thunk } from '../store/movement/thunks';
 import { clearErrorMovementReducer } from '../store/movement/movementSlice';
+import { useState } from 'react';
 
 export const PaymentScreen = () => {
 
@@ -19,6 +20,8 @@ export const PaymentScreen = () => {
 
     const { titleError, errorMessage } = useSelector((state: any) => state.movement );
 
+    const [hiddenAccount, setHiddenAccount] = useState(true);
+
     let { accountId_Income, accountId_Outcome, amount, reason, onChange, resetFields } = useForm({
         accountId_Income: '',
         accountId_Outcome: '',
@@ -27,11 +30,12 @@ export const PaymentScreen = () => {
     });
 
     const openAlert = () => {
+        if( accountId_Income.length < 10 || amount.length <= 3 || reason.length <= 4 ) return;
 
         Alert.alert(
             `Espera 
             `,
-            '¿Estás seguro de que deseas continuar?',
+            '¿Estás seguro(a) de que deseas continuar?',
             [
                 {
                     text: 'Cancelar',
@@ -65,6 +69,10 @@ export const PaymentScreen = () => {
         dispatch( clearErrorMovementReducer() );
     }
 
+    const onShowAccount = () => {
+        setHiddenAccount( !hiddenAccount );
+    }
+
     useEffect(() => {
         if( errorMessage === undefined ) return;
 
@@ -89,75 +97,110 @@ export const PaymentScreen = () => {
                     <View style={{ ...styles.containerForm }}>
 
                         <View style={{ ...styles.containerAccount }}>
-                            <View style={{ ...styles.container_titleAccounts }}>
-                                <Icon name="list-outline" style={{ ...styles.iconAccount }} />
+                            <TouchableOpacity 
+                                style={{ ...styles.container_titleAccounts }}
+                                activeOpacity={0.8}
+                                onPress={ onShowAccount }
+                            >
+                                {/* <Icon name="list-outline" style={{ ...styles.iconAccount }} /> */}
+
+                                {
+                                    hiddenAccount === false ? (
+                                        <Icon name="chevron-up-outline" style={{ ...styles.iconAccount }} />
+                                    ) : (
+                                        <Icon name="chevron-down-outline" style={{ ...styles.iconAccount }} />
+                                    )
+                                }
                                 <Text style={{ ...styles.titleAccount }}>Cuentas</Text>
-                            </View>
+                            </TouchableOpacity>
 
-                            <Text style={{ ...styles.containerAccount_title }}>Cuentas de Ahorro</Text>
-                            <Text style={{ ...styles.containerAccount_subtitle }}>Ahorros</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            {
+                                hiddenAccount === false ? (
+                                    <>
+                                        <Text style={{ ...styles.containerAccount_title }}>Cuentas de Ahorro</Text>
+                                        <Text style={{ ...styles.containerAccount_subtitle }}>Ahorros</Text>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <View>
+                                                <Text style={{ ...styles.containerAccount_accountId }}>{ account._id }</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={{ ...styles.containerAccount_titleBalance }}>Saldo disponible</Text>
+                                                <Text style={{ ...styles.containerAccount_balance }}>{ account.balance }</Text>
+                                            </View>
+                                        </View>
+                                    </>
+                                )
+                                : null
+                            }
+                        </View>
+
+                        {
+                            hiddenAccount === false ? (
+                                <>
+                                    <View style={ styles.textInputBackground }>
+                                        <TextInput
+                                            placeholder="Número de la cuenta"
+                                            style={{ 
+                                                ...styles.textInput,
+                                            }}
+                                            placeholderTextColor={ COLOR.GRAY_DARK }
+                                            autoCapitalize="none"
+
+                                            onChangeText={ (value) => onChange(value, 'accountId_Income') }
+                                            value={ accountId_Income }
+                                        />
+                                    </View>
+
+                                    <View style={ styles.textInputBackground }>
+                                        <TextInput
+                                            placeholder="Monto a transferir"
+                                            style={{ 
+                                                ...styles.textInput,
+                                            }}
+                                            placeholderTextColor={ COLOR.GRAY_DARK }
+                                            autoCapitalize="none"
+
+                                            onSubmitEditing={ openAlert }
+
+                                            onChangeText={ (value) => onChange(value, 'amount') }
+                                            value={ amount }
+                                        />
+                                    </View>
+
+                                    <View style={ styles.textInputBackground }>
+                                        <TextInput
+                                            placeholder="Motivo de la transferencia"
+                                            style={{ 
+                                                ...styles.textInput,
+                                            }}
+                                            placeholderTextColor={ COLOR.GRAY_DARK }
+                                            autoCapitalize="none"
+
+                                            onChangeText={ (value) => onChange(value, 'reason') }
+                                            value={ reason }
+                                        />
+                                    </View>
+
+                                    <TouchableOpacity
+                                        activeOpacity={0.9}
+                                        style={[ styles.btnRequestCredit ]}
+                                        onPress={ openAlert }
+                                    >
+                                        <Text style={[ styles.textBtn ]}>Enviar</Text>
+                                    </TouchableOpacity>
+                                </>
+                            ) : (
                                 <View>
-                                    <Text style={{ ...styles.containerAccount_accountId }}>{ account._id }</Text>
+                                    <Text
+                                        style={{
+                                            ...styles.textWithoutAccount
+                                        }}
+                                    >
+                                        Por favor selecciona una cuenta!
+                                    </Text>
                                 </View>
-                                <View>
-                                    <Text style={{ ...styles.containerAccount_titleBalance }}>Saldo disponible</Text>
-                                    <Text style={{ ...styles.containerAccount_balance }}>{ account.balance }</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        <View style={ styles.textInputBackground }>
-                            <TextInput
-                                placeholder="Número de la cuenta"
-                                style={{ 
-                                    ...styles.textInput,
-                                }}
-                                placeholderTextColor={ COLOR.GRAY_DARK }
-                                autoCapitalize="none"
-
-                                onChangeText={ (value) => onChange(value, 'accountId_Income') }
-                                value={ accountId_Income }
-                            />
-                        </View>
-
-                        <View style={ styles.textInputBackground }>
-                            <TextInput
-                                placeholder="Monto a transferir"
-                                style={{ 
-                                    ...styles.textInput,
-                                }}
-                                placeholderTextColor={ COLOR.GRAY_DARK }
-                                autoCapitalize="none"
-
-                                onSubmitEditing={ openAlert }
-
-                                onChangeText={ (value) => onChange(value, 'amount') }
-                                value={ amount }
-                            />
-                        </View>
-
-                        <View style={ styles.textInputBackground }>
-                            <TextInput
-                                placeholder="Motivo de la transferencia"
-                                style={{ 
-                                    ...styles.textInput,
-                                }}
-                                placeholderTextColor={ COLOR.GRAY_DARK }
-                                autoCapitalize="none"
-
-                                onChangeText={ (value) => onChange(value, 'reason') }
-                                value={ reason }
-                            />
-                        </View>
-
-                        <TouchableOpacity
-                            activeOpacity={0.9}
-                            style={[ styles.btnRequestCredit ]}
-                            onPress={ openAlert }
-                        >
-                            <Text style={[ styles.textBtn ]}>Enviar</Text>
-                        </TouchableOpacity>
+                            )
+                        }
 
                     </View>
                 </View>
@@ -286,8 +329,8 @@ const styles = StyleSheet.create({
     },
 
     btnRequestCredit: {
-        // backgroundColor: COLOR.BLUE,
-        backgroundColor: COLOR.BLUE_DALE,
+        // backgroundColor: COLOR.BLUE_DALE,
+        backgroundColor: COLOR.RED_DALE,
         paddingVertical: 15,
         // borderRadius: 6,
         borderRadius: 100,
@@ -299,5 +342,13 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'android' ? 17 : 14,
         textAlign: 'center',
         fontWeight: "500",
+    },
+
+    textWithoutAccount: {
+        color: COLOR.BLACK,
+        fontSize: Platform.OS === 'android' ? FONT_SIZES.TEXT_ANDROID : FONT_SIZES.TEXT_IOS,
+        textAlign: 'center',
+        fontWeight: "600",
+        paddingTop: 120
     },
 });
