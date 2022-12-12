@@ -29,6 +29,8 @@ export const HomeScreen = () => {
     const dispatchThunks = () => {
         dispatch( findAccountByUserId_thunk( user?._id ) );
         dispatch( myMovementsByAccountId_thunk( account?._id ) );
+        console.log('terminooooooooooooooooo')
+        console.log('movementsss: ', movements)
     }
 
     useEffect(() =>
@@ -40,15 +42,13 @@ export const HomeScreen = () => {
     const onRefresh = () => {
         setRefresh(true);
         dispatchThunks()
-
+        
         setRefresh(false);
     }
 
     useEffect(() => {
         dispatchThunks()
-    }, [ user, account, movements ]);
-
-    const testingMovements = movements.map((movement: any) => console.log(movement.accountId_Income + movement.amount))
+    }, [ account, movements ]);
 
     if( status === 'checking' ) return <Loading />;
 
