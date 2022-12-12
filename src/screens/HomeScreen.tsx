@@ -29,8 +29,6 @@ export const HomeScreen = () => {
     const dispatchThunks = () => {
         dispatch( findAccountByUserId_thunk( user?._id ) );
         dispatch( myMovementsByAccountId_thunk( account?._id ) );
-        console.log('terminooooooooooooooooo')
-        console.log('movementsss: ', movements)
     }
 
     useEffect(() =>
@@ -48,7 +46,9 @@ export const HomeScreen = () => {
 
     useEffect(() => {
         dispatchThunks()
-    }, [ account, movements ]);
+    // }, [ account, movements ]);
+    }, [ account.balance ]);
+
 
     if( status === 'checking' ) return <Loading />;
 

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkToken_thunk, logout_thunk } from '../store/auth/thunks';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
+import { checkingReducer } from "../store/auth/authSlice";
 
 
 export type RootStackParams = {
@@ -29,12 +30,12 @@ const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
 
-    // const { userStatus } = useContext( AuthContext );
     const dispatch: any = useDispatch();
     
     const { status } = useSelector( (state: any) => state.auth );
 
     const checkToken = async () => {
+        dispatch( checkingReducer() );
         const token: any = await AsyncStorage.getItem('token');
 
         if( !token ) {

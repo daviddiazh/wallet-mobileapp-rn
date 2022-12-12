@@ -17,7 +17,6 @@ export const authSlice = createSlice({
     reducers: {
         checkingReducer: ( state ) => {
             state.status = 'checking';
-            state.user = {};
             state.titleError = undefined;
             state.errorMessage = undefined;
         },
@@ -47,8 +46,6 @@ export const authSlice = createSlice({
 
         clearErrorReducer: ( state ) => {
             state.status = 'not-authenticated';
-            state.user = {};
-            state.token = undefined;
             state.titleError = undefined;
             state.errorMessage = undefined;
         },
