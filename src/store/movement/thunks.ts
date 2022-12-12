@@ -1,4 +1,4 @@
-import { loadingMovementsReducer, myMovementsByAccountIdReducer } from "./movementSlice";
+import { addErrorMovementReducer, loadingMovementsReducer, myMovementsByAccountIdReducer } from "./movementSlice";
 import { MYMOVEMENTSBYACCOUNTID_MOVEMENT } from '../../graphql/queries';
 import { apolloClient } from '../../graphql/apolloClient';
 import { REQUESTCREDIT_MUTATION, MONEYTRANSFER_MUTATION } from '../../graphql/mutations';
@@ -82,7 +82,7 @@ export const moneyTransfer_thunk = ({
 
         const numberAmount = parseInt(amount)
 
-        const { data } = await apolloClient.mutate({
+        const { data: { moneyTransfer } } = await apolloClient.mutate({
             mutation: MONEYTRANSFER_MUTATION,
             variables: {
                 moneyTransfer: {
@@ -93,6 +93,10 @@ export const moneyTransfer_thunk = ({
                 }
             },
         });
+
+        if( moneyTransfer.code ){
+            dispatch( addErrorMovementReducer( moneyTransfer ) )
+        }
 
     }
 };

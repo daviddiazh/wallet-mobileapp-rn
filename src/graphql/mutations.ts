@@ -68,16 +68,23 @@ export const REQUESTCREDIT_MUTATION = gql`
 `;
 
 export const MONEYTRANSFER_MUTATION = gql`
-    mutation Mutation($moneyTransfer: MoneyTransferDto!) {
+    mutation MoneyTransfer($moneyTransfer: MoneyTransferDto!) {
         moneyTransfer(moneyTransfer: $moneyTransfer) {
-            movement {
-                _id
+            ... on MoneyTransfer {
+                movement {
+                    _id
+                }
+                savedBalanceIncome {
+                    _id
+                }
+                savedBalanceOutcome {
+                    _id
+                }
             }
-            savedBalanceIncome {
-                _id
-            }
-            savedBalanceOutcome {
-                _id
+            ... on StatusError {
+                code
+                title
+                description
             }
         }
     }

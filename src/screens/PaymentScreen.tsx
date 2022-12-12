@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { moneyTransfer_thunk } from '../store/movement/thunks';
+import { clearErrorMovementReducer } from '../store/movement/movementSlice';
 
 export const PaymentScreen = () => {
 
@@ -15,6 +16,8 @@ export const PaymentScreen = () => {
     const dispatch: any = useDispatch();
 
     const { account } = useSelector((state: any) => state.account );
+
+    const { titleError, errorMessage } = useSelector((state: any) => state.movement );
 
     let { accountId_Income, accountId_Outcome, amount, reason, onChange, resetFields } = useForm({
         accountId_Income: '',
@@ -43,19 +46,39 @@ export const PaymentScreen = () => {
 
     const onMoneyTransfer = () => {
         accountId_Outcome = account?._id!
-        
+
         dispatch( moneyTransfer_thunk({
             accountId_Income,
             accountId_Outcome,
             amount,
             reason
-        }) )
+        }) );
+        
         navigator.navigate('HomeScreen')
 
         resetFields("accountId_Income");
         resetFields("amount");
         resetFields("reason");
     }
+
+    const onClearError = () => {
+        dispatch( clearErrorMovementReducer() );
+    }
+
+    useEffect(() => {
+        if( errorMessage === undefined ) return;
+
+        Alert.alert(
+            `${ titleError }`, 
+            `${ errorMessage }`,
+            [
+                {
+                    text: 'Ok',
+                    onPress: onClearError
+                }
+            ]
+        )
+    }, [ errorMessage ]);
 
     return (
         <SafeAreaView>
@@ -133,7 +156,7 @@ export const PaymentScreen = () => {
                             style={[ styles.btnRequestCredit ]}
                             onPress={ openAlert }
                         >
-                            <Text style={[ styles.textBtn ]}>Continuar</Text>
+                            <Text style={[ styles.textBtn ]}>Enviar</Text>
                         </TouchableOpacity>
 
                     </View>
