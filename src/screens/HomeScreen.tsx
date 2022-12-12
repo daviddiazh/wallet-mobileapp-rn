@@ -50,7 +50,7 @@ export const HomeScreen = () => {
     }, [ account.balance ]);
 
 
-    if( status === 'checking' ) return <Loading />;
+    if( status === 'checking' || isLoadingAccount ) return <Loading />;
 
     return (
         <SafeAreaView style={{ ...styles.main }}>
@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
     iconAnalytics: {
         fontSize: 17,
         marginRight: 10,
-        // color: COLOR.BLACK,
     },
 
     descriptionReason: {
@@ -266,13 +265,3 @@ const styles = StyleSheet.create({
     }
 
 });
-
-
-
-
-// export const HomeScreen = () => {
-
-//     return (
-//         <Text>Hello world</Text>
-//     )
-// }

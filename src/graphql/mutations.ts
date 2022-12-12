@@ -43,6 +43,9 @@ export const LOGIN_MUTATION = gql`
 `;
 
 
+/** 
+ ** Movements
+*/
 
 export const REQUESTCREDIT_MUTATION = gql`
     mutation Mutation($requestCredit: RequestCreditDto!) {
@@ -63,8 +66,6 @@ export const REQUESTCREDIT_MUTATION = gql`
         }
     }
 `;
-
-
 
 export const MONEYTRANSFER_MUTATION = gql`
     mutation Mutation($moneyTransfer: MoneyTransferDto!) {

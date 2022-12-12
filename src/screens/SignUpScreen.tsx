@@ -1,18 +1,16 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
-import { AuthContext } from '../context/auth/AuthContext';
 import { useDispatch } from 'react-redux';
 import { signUp_thunk } from '../store/auth/thunks';
 
 export const SignUpScreen = () => {
 
     const navigator: any = useNavigation();
-    // const { signUp, error, removeError } = useContext( AuthContext );
 
     const dispatch: any = useDispatch();
 
@@ -28,7 +26,6 @@ export const SignUpScreen = () => {
         if( email.length < 4 || password.length < 2 || password.length < 4 || phone.length < 7 ) return;
 
         dispatch( signUp_thunk({ fullName, email, password, phone }) );
-        // navigator.navigate("WelcomeScreen")
     }
 
     return (

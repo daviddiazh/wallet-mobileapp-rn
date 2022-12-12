@@ -1,5 +1,9 @@
 import { gql } from '@apollo/client';
 
+/** 
+ ** Account
+*/
+
 export const FINDACCOUNTBYUSERID_ACCOUNT = gql`
     query FindByUserId($findByUserId: ID!) {
         findByUserId(id: $findByUserId) {
@@ -29,6 +33,10 @@ export const MYMOVEMENTSBYACCOUNTID_MOVEMENT = gql`
     }
 `;
 
+
+/** 
+ ** Auth
+*/
 
 export const CHECKTOKEN_QUERY = gql`
     query CheckToken($token: String!) {

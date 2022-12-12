@@ -19,7 +19,6 @@ import { checkingReducer } from "../store/auth/authSlice";
 export type RootStackParams = {
     LoginScreen: undefined, 
     SignUpScreen: undefined,
-    WelcomeScreen: undefined,
     HomeScreen: undefined,
     Tabs: undefined,
     CreditScreen: undefined,
@@ -72,7 +71,6 @@ export const StackNavigator = () => {
                         <>
                             <Stack.Screen name="LoginScreen" component={ LoginScreen } />
                             <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
-                            {/* <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } /> */}
                         </>
                     ) 
                     : (
@@ -81,14 +79,9 @@ export const StackNavigator = () => {
                             <Stack.Screen name="HomeScreen" component={ HomeScreen } />
                             <Stack.Screen name="CreditScreen" component={ CreditScreen } />
                             <Stack.Screen name="PaymentScreen" component={ PaymentScreen } />
-                            {/* <Stack.Screen name="ApprovedCreditScreen" component={ ApprovedCreditScreen } /> */}
                         </Stack.Group>
                     ) 
             }
-
-
-            {/* <Stack.Screen name="LoginScreen" component={ LoginScreen } />
-            <Stack.Screen name="SignUpScreen" component={ SignUpScreen } /> */}
         </Stack.Navigator>
     );
 }

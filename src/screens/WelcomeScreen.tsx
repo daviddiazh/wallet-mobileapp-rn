@@ -3,13 +3,10 @@ import { View, Text, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { COLOR } from '../theme/index';
-import { AuthContext } from '../context/auth/AuthContext';
 
 export const WelcomeScreen = () => {
 
     const navigator: any = useNavigation();
-
-    const { user } = useContext( AuthContext );
 
     // console.log('USERRR IN WS' , user)
 

@@ -1,10 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
-import { findAccountByUserId_thunk } from '../account/thunks';
-import { myMovementsByAccountId_thunk } from '../movement/thunks';
+import { IUser } from '../../interfaces/user.interface';
 
-const initialState = {
-    status: 'not-authenticated', // 'checking', 'authenticated', 'not-authenticated'
+type StatusInterface = | 'checking' | 'authenticated' | 'not-authenticated'
+
+interface InitialState {
+    status: StatusInterface;
+    user: IUser,
+    token: string | undefined,
+    titleError: string | undefined,
+    errorMessage: string | undefined,
+}
+
+const initialState: InitialState = {
+    status: 'checking', //TODO: Review it
     user: {},
     token: undefined,
     titleError: undefined,

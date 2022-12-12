@@ -5,18 +5,13 @@ import { LogBox, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { StackNavigator } from './src/navigator/StackNavigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AuthProvider } from './src/context/auth/AuthProvider';
 import { COLOR } from './src/theme/index';
 import SplashScreen from 'react-native-splash-screen';
-import { AccountProvider } from './src/context/account/AccountProvider';
-import { MovementsProvider } from './src/context/movements/MovementProvider';
 
 import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from './src/graphql/apolloClient';
-import { Provider as ReduxProvider, useDispatch, useSelector } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './src/store/store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { checkToken_thunk, logout_thunk } from './src/store/auth/thunks';
 
 
 const ApplicationState = ({ children }: any) => {

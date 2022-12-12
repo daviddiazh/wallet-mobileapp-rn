@@ -1,11 +1,10 @@
-import React, { Fragment, useContext, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, Platform, TouchableOpacity, Keyboard } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
 import { useForm } from '../hooks/useForm';
-import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { login_thunk } from '../store/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +13,6 @@ import { clearErrorReducer } from '../store/auth/authSlice';
 export const LoginScreen = () => {
 
     const navigator: NavigationProp<any, any> = useNavigation();
-    // const { login, error, removeError } = useContext( AuthContext );
 
     const dispatch: any = useDispatch();
     const { errorMessage, titleError } = useSelector( (state: any) => state.auth );
@@ -49,7 +47,6 @@ export const LoginScreen = () => {
         if( email.length < 4 || password.length < 2 ) return;
         
         dispatch( login_thunk({ email, password }) );
-        // navigator.navigate("HomeScreen");
     }
 
     return (

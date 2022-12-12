@@ -8,7 +8,6 @@ import { PaymentScreen } from '../screens/PaymentScreen';
 import { COLOR } from '../theme/index';
 
 const Tab = createBottomTabNavigator();
-// const Tab = createMaterialBottomTabNavigator();
 
 export const Tabs = () => {
 

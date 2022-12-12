@@ -4,14 +4,6 @@ import { apolloClient } from '../../graphql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../../graphql/mutations';
 import { CHECKTOKEN_QUERY } from '../../graphql/queries';
 
-// export const checkingAuthentication = () => {
-//     return async( dispatch: any ) => {
-
-//         dispatch( checkingReducer() );
-//     }
-// }
-
-
 interface SignUpProps {
     fullName: string;
     phone: string; 

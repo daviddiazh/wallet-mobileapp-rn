@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { StatusBar, Text, View, StyleSheet, Platform, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,9 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm } from '../hooks/useForm';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, FONT_SIZES, PADDING_BUTTONS } from '../theme/index';
-import { MovementContext } from '../context/movements/MovementContext';
-import { AccountContext } from '../context/account/AccountContext';
-import { AuthContext } from '../context/auth/AuthContext';
 import { useSelector, useDispatch } from 'react-redux';
 import { moneyTransfer_thunk } from '../store/movement/thunks';
 
@@ -17,11 +14,6 @@ export const PaymentScreen = () => {
     const navigator: any = useNavigation();
     const dispatch: any = useDispatch();
 
-    // const { user } = useContext( AuthContext );
-    // const { account, findByUserEmail } = useContext( AccountContext );
-    // const { moneyTransfer } = useContext( MovementContext );
-
-    const { user } = useSelector((state: any) => state.auth );
     const { account } = useSelector((state: any) => state.account );
 
     let { accountId_Income, accountId_Outcome, amount, reason, onChange, resetFields } = useForm({
@@ -51,7 +43,7 @@ export const PaymentScreen = () => {
 
     const onMoneyTransfer = () => {
         accountId_Outcome = account?._id!
-        // moneyTransfer(accountId_Income, accountId_Outcome, reason, amount);
+        
         dispatch( moneyTransfer_thunk({
             accountId_Income,
             accountId_Outcome,
@@ -64,10 +56,6 @@ export const PaymentScreen = () => {
         resetFields("amount");
         resetFields("reason");
     }
-
-    // useEffect(() => {
-    //     findByUserEmail(user?.email!);
-    // }, [account.balance ]);
 
     return (
         <SafeAreaView>

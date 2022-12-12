@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IMovement } from '../../interfaces/movement.interface';
 
-const initialState = {
+interface InitialState {
+    movements: IMovement[],
+    isLoadingMovements: boolean,
+    errorMessage: string | undefined,
+}
+
+const initialState: InitialState = {
     movements: [],
     isLoadingMovements: false,
     errorMessage: undefined,
