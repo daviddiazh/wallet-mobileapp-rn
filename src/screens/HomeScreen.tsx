@@ -19,16 +19,17 @@ export const HomeScreen = () => {
     const dispatch: any = useDispatch();
 
     const { user, status } = useSelector((state: any) => state.auth );
-    console.log({user})
     
     const { account, isLoadingAccount } = useSelector((state: any) => state.account );
-    console.log({account})
 
     const { movements } = useSelector((state: any) => state.movement );
-    console.log({movements})
-    
-    // const [isLoading, setIsLoading] = useState(false)
-    const [refresh, setRefresh] = useState(false)
+
+    const [refresh, setRefresh] = useState(false);
+
+    const dispatchThunks = () => {
+        dispatch( findAccountByUserId_thunk( user?._id ) );
+        dispatch( myMovementsByAccountId_thunk( account?._id ) );
+    }
 
     useEffect(() =>
         navigator.addListener('beforeRemove', (e: any) => {
@@ -38,21 +39,18 @@ export const HomeScreen = () => {
 
     const onRefresh = () => {
         setRefresh(true);
-        dispatch( findAccountByUserId_thunk( user?.id ) );
-        dispatch( myMovementsByAccountId_thunk( account?._id ) );
+        dispatchThunks()
 
         setRefresh(false);
     }
 
     useEffect(() => {
-        console.log('USER IN USEEFFECT: ', {user})
-        dispatch( findAccountByUserId_thunk( user?._id ) );
-        dispatch( myMovementsByAccountId_thunk( account?._id ) );
+        dispatchThunks()
     }, [ user, account, movements ]);
 
-    // if( isLoading ) return <Loading />;
-    // dispatch( logoutReducer() );
-    // console.log({status})
+    const testingMovements = movements.map((movement: any) => console.log(movement.accountId_Income + movement.amount))
+
+    if( status === 'checking' ) return <Loading />;
 
     return (
         <SafeAreaView style={{ ...styles.main }}>
@@ -104,7 +102,7 @@ export const HomeScreen = () => {
                                                 <View style={{ ...styles.containerAmountAndReason }}>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                         {
-                                                            movement.accountId_Income == account?._id ? (
+                                                            movement.accountId_Income === account?._id ? (
                                                                 <Icon name="trending-up-outline" style={{ ...styles.iconAnalytics, color: movement.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />
                                                             ) : (
                                                                 <Icon name="trending-down-outline" style={{ ...styles.iconAnalytics, color: movement?.accountId_Income === account._id ? COLOR.GREEN : COLOR.RED_DARK }} />

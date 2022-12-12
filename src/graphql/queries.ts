@@ -1,10 +1,17 @@
 import { gql } from '@apollo/client';
 
 export const FINDACCOUNTBYUSERID_ACCOUNT = gql`
-    query Query($findByUserId: ID!) {
+    query FindByUserId($findByUserId: ID!) {
         findByUserId(id: $findByUserId) {
-            balance
-            _id
+            ... on AccountGQLFBUI {
+                _id
+                balance
+            }
+            ... on StatusError {
+                code
+                title
+                description
+            }
         }
     }
 `;

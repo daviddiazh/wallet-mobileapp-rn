@@ -47,11 +47,18 @@ export const LOGIN_MUTATION = gql`
 export const REQUESTCREDIT_MUTATION = gql`
     mutation Mutation($requestCredit: RequestCreditDto!) {
         requestCredit(requestCredit: $requestCredit) {
-            movement {
-                _id
+            ... on RequestCredit {
+                movement {
+                    _id
+                }
+                updateBalance {
+                    _id
+                }
             }
-            updateBalance {
-                _id
+            ... on StatusError {
+                code
+                title
+                description
             }
         }
     }

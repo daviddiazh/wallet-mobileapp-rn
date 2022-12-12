@@ -51,10 +51,9 @@ export const PaymentScreen = () => {
 
     const onMoneyTransfer = () => {
         accountId_Outcome = account?._id!
-        console.log('accountId_Outcome: ', accountId_Outcome)
         // moneyTransfer(accountId_Income, accountId_Outcome, reason, amount);
         dispatch( moneyTransfer_thunk({
-            accountId_Income: account?._id,
+            accountId_Income,
             accountId_Outcome,
             amount,
             reason
