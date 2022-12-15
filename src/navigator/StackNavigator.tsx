@@ -1,9 +1,7 @@
-// import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import { AuthContext } from '../context/auth/AuthContext';
 import { LoginScreen } from '../screens/LoginScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
-import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { Loading } from '../components/Loading';
 import { Tabs } from './Tabs';
@@ -12,13 +10,13 @@ import { PaymentScreen } from '../screens/PaymentScreen';
 import { useSelector, useDispatch } from 'react-redux';
 import { checkToken_thunk, logout_thunk } from '../store/auth/thunks';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect } from "react";
 import { checkingReducer } from "../store/auth/authSlice";
 
 
 export type RootStackParams = {
     LoginScreen: undefined, 
     SignUpScreen: undefined,
+    WelcomeScreen: undefined,
     HomeScreen: undefined,
     Tabs: undefined,
     CreditScreen: undefined,
@@ -45,7 +43,6 @@ export const StackNavigator = () => {
     }
 
     useEffect(() => {
-        console.log({status})
         checkToken();
     }, []);
 
@@ -71,6 +68,7 @@ export const StackNavigator = () => {
                         <>
                             <Stack.Screen name="LoginScreen" component={ LoginScreen } />
                             <Stack.Screen name="SignUpScreen" component={ SignUpScreen } />
+                            {/* <Stack.Screen name="WelcomeScreen" component={ WelcomeScreen } /> */}
                         </>
                     ) 
                     : (

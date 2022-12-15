@@ -111,7 +111,7 @@ export const PaymentScreen = () => {
                                         <Icon name="chevron-down-outline" style={{ ...styles.iconAccount }} />
                                     )
                                 }
-                                <Text style={{ ...styles.titleAccount }}>Cuentas</Text>
+                                <Text style={{ ...styles.titleAccount }}>Mis Cuentas</Text>
                             </TouchableOpacity>
 
                             {
@@ -196,7 +196,8 @@ export const PaymentScreen = () => {
                                             ...styles.textWithoutAccount
                                         }}
                                     >
-                                        Por favor selecciona una cuenta!
+                                        Por favor selecciona una cuenta
+                                        <Icon name="arrow-up-outline" />
                                     </Text>
                                 </View>
                             )

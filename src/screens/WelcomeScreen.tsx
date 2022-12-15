@@ -1,14 +1,15 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { COLOR } from '../theme/index';
+import { useSelector } from 'react-redux';
 
 export const WelcomeScreen = () => {
 
     const navigator: any = useNavigation();
 
-    // console.log('USERRR IN WS' , user)
+    const { user } = useSelector((state: any) => state.auth );
 
     useEffect(() => {
 
@@ -41,16 +42,16 @@ export const WelcomeScreen = () => {
                 >
                     Bienvenido(a)
                 </Text>
-                {/* <Text
+                <Text
                     style={{
-                        fontSize: Platform.OS === 'ios' ? 20 : 24,
+                        fontSize: Platform.OS === 'ios' ? 20 : 23,
                         color: COLOR.BLUE_DARK,
                         fontWeight: "600",
-                        paddingTop: 10
+                        paddingTop: 10,
                     }}
                 >
                     { user?.fullName.split(' ')[0] }
-                </Text> */}
+                </Text>
             </View>
         </Fragment>
     );

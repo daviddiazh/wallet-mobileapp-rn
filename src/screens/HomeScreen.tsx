@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
-import { COLOR, FONT_SIZES } from '../theme/index';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useState } from 'react';
-import { Loading } from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
 import { findAccountByUserId_thunk } from '../store/account/thunks';
 import { myMovementsByAccountId_thunk } from '../store/movement/thunks';
+import { Loading } from '../components/Loading';
+import { COLOR, FONT_SIZES } from '../theme/index';
 
 
 export const HomeScreen = () => {
@@ -46,7 +45,6 @@ export const HomeScreen = () => {
 
     useEffect(() => {
         dispatchThunks()
-    // }, [ account, movements ]);
     }, [ account.balance ]);
 
 

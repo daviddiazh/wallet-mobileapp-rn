@@ -44,9 +44,10 @@ export const LoginScreen = () => {
 
     const onLogin = () => {
         Keyboard.dismiss();
+        const cleanEmail = email.toLowerCase().trim();
         if( email.length < 4 || password.length < 2 ) return;
         
-        dispatch( login_thunk({ email, password }) );
+        dispatch( login_thunk({ email: cleanEmail, password }) );
     }
 
     return (
@@ -130,6 +131,7 @@ export const LoginScreen = () => {
                                     ...styles.textRegisterRed
                                 }}
                                 onPress={() => navigator.navigate("SignUpScreen")}
+                                suppressHighlighting={true}
                             > 
                                 Registrarme en dale!
                             </Text>

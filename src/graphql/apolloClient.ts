@@ -13,4 +13,4 @@ export const apolloClient = new ApolloClient({
             fetchPolicy: 'no-cache'
         }
     }
-})
+});

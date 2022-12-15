@@ -23,9 +23,20 @@ export const SignUpScreen = () => {
 
     const onSignUp = () => {
         Keyboard.dismiss();
+        const cleanFullName = fullName.trim();
+        const cleanEmail = email.toLowerCase().trim();
+        const cleanPassword = password.trim();
+
         if( email.length < 4 || password.length < 2 || password.length < 4 || phone.length < 7 ) return;
 
-        dispatch( signUp_thunk({ fullName, email, password, phone }) );
+        dispatch( 
+            signUp_thunk({ 
+                fullName: cleanFullName,
+                email: cleanEmail, 
+                password: cleanPassword,
+                phone 
+            }) 
+        );
     }
 
     return (
@@ -135,6 +146,7 @@ export const SignUpScreen = () => {
                                     ...styles.textLoginRed
                                 }}
                                 onPress={() => navigator.navigate("LoginScreen")}
+                                suppressHighlighting={true}
                             > 
                                 Iniciar sesión en mi dale!
                             </Text>
