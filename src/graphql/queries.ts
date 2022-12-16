@@ -45,6 +45,7 @@ export const CHECKTOKEN_QUERY = gql`
                 user {
                     _id
                     fullName
+                    profilePicture
                 }
                 token
             }

@@ -44,6 +44,11 @@ export const authSlice = createSlice({
             state.errorMessage = undefined;
         },
 
+        updatePictureReducer: ( state, { payload } ) => {
+            state.user.profilePicture = payload.secureUrl;
+            state.status = 'authenticated';
+        },
+
         addErrorReducer: ( state, { payload } ) => {
             state.status = 'not-authenticated';
             state.user = {};
@@ -64,6 +69,7 @@ export const {
     checkingReducer, 
     signInReducer, 
     logoutReducer, 
+    updatePictureReducer,
     addErrorReducer,
     clearErrorReducer
 } = authSlice.actions;

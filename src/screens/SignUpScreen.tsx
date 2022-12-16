@@ -28,13 +28,13 @@ export const SignUpScreen = () => {
         const cleanPassword = password.trim();
 
         if( email.length < 4 || password.length < 2 || password.length < 4 || phone.length < 7 ) return;
-
-        dispatch( 
+ 
+        dispatch(
             signUp_thunk({ 
                 fullName: cleanFullName,
                 email: cleanEmail, 
                 password: cleanPassword,
-                phone 
+                phone,
             }) 
         );
     }
@@ -55,6 +55,7 @@ export const SignUpScreen = () => {
                     </View>
 
                     <View style={[ styles.containerForm ]}>
+
                         <View style={ styles.textInputBackground }>
                             <TextInput 
                                 placeholder="Nombre completo"

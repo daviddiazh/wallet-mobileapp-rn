@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Platform, StatusBar, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
@@ -72,7 +72,11 @@ export const HomeScreen = () => {
                     style={{ ...styles.amountContainer, }}
                 >
                     <View style={{ ...styles.containerIcon }}>
-                        <Icon name="wallet-outline" style={{ ...styles.iconMoney }} />
+                        {/* <Icon name="wallet-outline" style={{ ...styles.iconMoney }} /> */}
+                        <Image 
+                            source={{ uri: user.profilePicture }}
+                            style={{ width: 50, height: 50, borderRadius: 100 }}
+                        />
                     </View>
                     <View>
                         <Text style={{ ...styles.amount }}>{ account.balance }</Text>
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
         // borderWidth: 3,
         backgroundColor: COLOR.GRAY_LIGHT,
         borderRadius: 100,
-        padding: 10,
+        // padding: 10,
         marginHorizontal: 15
     },
 

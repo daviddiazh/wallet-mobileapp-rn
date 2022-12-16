@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLOR } from '../theme';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout_thunk } from '../store/auth/thunks';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { logout_thunk, updatePicture_thunk } from '../store/auth/thunks';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { COLOR } from '../theme';
 
 export const MenuScreen = () => {
 
@@ -13,6 +14,22 @@ export const MenuScreen = () => {
 
     const { user } = useSelector((state: any) => state.auth );
     const dispatch: any = useDispatch();
+
+    const [ tempImage, setTempImage ] = useState<string>('')
+
+    const takePictureFromGallery = () => {
+        launchImageLibrary({
+            mediaType: 'photo',
+            quality: 0.5
+        }, (resp: any) => {
+            if( resp?.didCancel ) return;
+            if( !resp?.assets[0]?.uri ) return;
+
+            setTempImage( resp?.assets[0]?.uri );
+
+            dispatch( updatePicture_thunk( user._id, resp ) );
+        });
+    }
 
     const logout = () => {
         dispatch( logout_thunk() );
@@ -22,13 +39,24 @@ export const MenuScreen = () => {
         <SafeAreaView>
             <View style={{ ...styles.mainMenu }}>
                 <Text style={{ ...styles.titleMenu }}>Menú</Text>
-                <View style={{ ...styles.containerPicture }}>
-                    <Image
-                        // source={{ uri: user?.profilePicture }}
-                        source={{ uri: 'https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png' }}
-                        style={{ ...styles.avatar }}
-                    />
-                </View>
+
+                <TouchableOpacity
+                    activeOpacity={ .7 }
+                    onPress={ takePictureFromGallery }
+                >
+                    <View style={{ ...styles.containerPicture }}>
+                        <Image 
+                            source={{ uri: user.profilePicture }}
+                            style={{ ...styles.avatar }}
+                        />
+                        <View style={{ ...styles.containerIconAvatar }}>
+                            <Icon 
+                                name="image-outline"
+                                style={{ ...styles.iconAvatar }}
+                            />
+                        </View>
+                    </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     activeOpacity={.75}
@@ -114,6 +142,18 @@ const styles = StyleSheet.create({
         height: 100, 
         borderRadius: 100,
         marginVertical: 40
+    },
+
+    containerIconAvatar: {
+        bottom: 75,
+        right: -40,
+        borderRadius: 100, 
+        backgroundColor: COLOR.WHITE, 
+    },
+
+    iconAvatar: {
+        padding: 7,
+        fontSize: 18
     },
 
     menuItem: {

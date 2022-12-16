@@ -11,6 +11,7 @@ export const SIGNUP_MUTATION = gql`
                 user {
                     _id
                     fullName
+                    profilePicture
                 }
                 token
             }
@@ -30,6 +31,7 @@ export const LOGIN_MUTATION = gql`
                 user {
                     _id
                     fullName
+                    profilePicture
                 }
                 token
             }

@@ -15,8 +15,6 @@ export const accountSlice = createSlice({
         },
 
         findAccountByUserIdReducer: ( state, { payload } ) => {
-            console.log('PAYLOADDDD: ', payload);
-
             state.account = payload;
             state.isLoadingAccount = false;
             state.errorMessage = undefined;

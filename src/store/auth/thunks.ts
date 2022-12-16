@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from './authSlice';
+import { ImagePickerResponse } from 'react-native-image-picker';
+import { addErrorReducer, checkingReducer, logoutReducer, signInReducer, updatePictureReducer } from './authSlice';
 import { apolloClient } from '../../graphql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../../graphql/mutations';
 import { CHECKTOKEN_QUERY } from '../../graphql/queries';
+import walletApi from '../../api';
 
 interface SignUpProps {
     fullName: string;
@@ -12,7 +14,7 @@ interface SignUpProps {
     profilePicture?: string;
 }
 
-export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) => {
+export const signUp_thunk = ({ fullName, email, password, phone }: SignUpProps) => {
     return async ( dispatch: any ) => {
 
         dispatch( checkingReducer() );
@@ -27,7 +29,6 @@ export const signUp_thunk = ({fullName, email, password, phone}: SignUpProps) =>
                     email,
                     password,
                     phone: cellphone,
-                    // profilePicture: ''
                 }
             }
         })
@@ -108,6 +109,33 @@ export const logout_thunk = () => {
         await AsyncStorage.removeItem('token');
         
         dispatch( logoutReducer() );
+
+    }
+}
+
+
+export const updatePicture_thunk = ( id: string, picture: any ) => {
+    return async ( dispatch: any ) => {
+
+        dispatch( checkingReducer() );
+        
+        const imageToUpload = {
+            uri: picture.assets[0].uri,
+            type: picture.assets[0].type,
+            name: picture.assets[0].fileName
+        }
+
+        const formData = new FormData();
+        formData.append('profilePicture', imageToUpload);
+
+        try {
+            const { data } = await walletApi.put(`/user/updatePicture/${ id }`, formData );
+
+            dispatch( updatePictureReducer(data) )
+            return data;
+        } catch( error ) {
+            console.log(error)
+        }
 
     }
 }
