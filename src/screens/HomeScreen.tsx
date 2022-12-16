@@ -44,7 +44,7 @@ export const HomeScreen = () => {
     }
 
     useEffect(() => {
-        dispatchThunks()
+        dispatchThunks();
     }, [ account.balance ]);
 
 
@@ -72,11 +72,19 @@ export const HomeScreen = () => {
                     style={{ ...styles.amountContainer, }}
                 >
                     <View style={{ ...styles.containerIcon }}>
-                        {/* <Icon name="wallet-outline" style={{ ...styles.iconMoney }} /> */}
-                        <Image 
-                            source={{ uri: user.profilePicture }}
-                            style={{ width: 50, height: 50, borderRadius: 100 }}
-                        />
+                        {
+                            !user.profilePicture ? (
+                                <Icon 
+                                    name="person-outline"
+                                    style={{ padding: 10, fontSize: 23 }}
+                                />
+                            ) : (
+                                <Image 
+                                    source={{ uri: user.profilePicture }}
+                                    style={{ width: 50, height: 50, borderRadius: 100 }}
+                                />
+                            )
+                        }
                     </View>
                     <View>
                         <Text style={{ ...styles.amount }}>{ account.balance }</Text>

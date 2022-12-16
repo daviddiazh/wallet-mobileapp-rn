@@ -15,8 +15,6 @@ export const MenuScreen = () => {
     const { user } = useSelector((state: any) => state.auth );
     const dispatch: any = useDispatch();
 
-    const [ tempImage, setTempImage ] = useState<string>('')
-
     const takePictureFromGallery = () => {
         launchImageLibrary({
             mediaType: 'photo',
@@ -24,8 +22,6 @@ export const MenuScreen = () => {
         }, (resp: any) => {
             if( resp?.didCancel ) return;
             if( !resp?.assets[0]?.uri ) return;
-
-            setTempImage( resp?.assets[0]?.uri );
 
             dispatch( updatePicture_thunk( user._id, resp ) );
         });
@@ -45,10 +41,23 @@ export const MenuScreen = () => {
                     onPress={ takePictureFromGallery }
                 >
                     <View style={{ ...styles.containerPicture }}>
-                        <Image 
-                            source={{ uri: user.profilePicture }}
-                            style={{ ...styles.avatar }}
-                        />
+                        {
+                            !user.profilePicture ? (
+                                <View
+                                    style={{ ...styles.containerAvatar }}
+                                >
+                                    <Icon 
+                                        name="person-outline"
+                                        style={{ padding: 35, fontSize: 40 }}
+                                    />
+                                </View>
+                            ) : (
+                                <Image 
+                                    source={{ uri: user.profilePicture }}
+                                    style={{ width: 100, height: 100, borderRadius: 100 }}
+                                />
+                            )
+                        }
                         <View style={{ ...styles.containerIconAvatar }}>
                             <Icon 
                                 name="image-outline"
@@ -137,6 +146,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
+    containerAvatar: {
+        backgroundColor: COLOR.WHITE,
+        borderRadius: 100,
+        marginHorizontal: 15
+    },
+
     avatar: {
         width: 100, 
         height: 100, 
@@ -145,14 +160,16 @@ const styles = StyleSheet.create({
     },
 
     containerIconAvatar: {
-        bottom: 75,
-        right: -40,
+        bottom: 40,
+        right: -44,
         borderRadius: 100, 
-        backgroundColor: COLOR.WHITE, 
+        backgroundColor: COLOR.GRAY_LIGHT,
+        borderColor: COLOR.WHITE,
+        borderWidth: 2
     },
 
     iconAvatar: {
-        padding: 7,
+        padding: 5,
         fontSize: 18
     },
 
