@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -66,6 +66,11 @@ export const MenuScreen = () => {
                         </View>
                     </View>
                 </TouchableOpacity>
+                <Text
+                    style={{ ...styles.fullName }}
+                >
+                    { user.fullName }
+                </Text>
 
                 <TouchableOpacity
                     activeOpacity={.75}
@@ -171,6 +176,15 @@ const styles = StyleSheet.create({
     iconAvatar: {
         padding: 5,
         fontSize: 18
+    },
+
+    fullName: {
+        fontSize: Platform.OS === 'android' ? 20 : 16,
+        color: COLOR.BLACK,
+        fontWeight: "500",
+        textAlign: 'center',
+        paddingBottom: 40,
+        marginTop: -15
     },
 
     menuItem: {
